@@ -29,26 +29,24 @@
   <groupId>org.apache.gora</groupId>
   <artifactId>gora</artifactId>
   <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
 
   <name>Apache Gora</name>
-  <description>The Apache Gora open source framework provides an in-memory data model and
-    persistence for big data. Gora supports persisting to column stores, key value stores,
-    document stores and RDBMSs, and analyzing the data with extensive Apache Hadoop MapReduce
-    support. </description>
-  <url>http://gora.apache.org</url>
+  <description>The Apache Gora version maintained by platon.ai, primarily aimed at continuously upgrading gora-mongodb.</description>
+
+  <url>https://browser4.io</url>
   <inceptionYear>2010</inceptionYear>
 
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
 
   <organization>
-    <name>The Apache Software Foundation</name>
-    <url>http://www.apache.org/</url>
+    <name>Browser Agent Foundation</name>
+    <url>https://browser4.io</url>
   </organization>
 
   <developers>
@@ -607,16 +605,14 @@
     <spring-boot.version>4.0.1</spring-boot.version>
 
     <!-- Avro Dependencies -->
-<!--    <avro.version>1.12.1</avro.version>-->
     <avro.version>1.8.2</avro.version>
+    <!-- Generated classes should be re-generated when avro updates -->
+<!--    <avro.version>1.12.1</avro.version>-->
     <!--     <jackson.version>1.6.9</jackson.version> -->
     <!-- Hadoop Dependencies -->
     <hadoop-common.version>3.4.2</hadoop-common.version>
     <hadoop-3.version>3.4.2</hadoop-3.version>
     <hadoop-3.test.version>3.4.2</hadoop-3.test.version>
-
-    <hadoop-2.version>2.10.2</hadoop-2.version>
-    <hadoop-2.test.version>2.10.2</hadoop-2.test.version>
 
     <!-- <flink.version>1.16.3</flink.version>-->
     <flink.version>2.2.0</flink.version>
@@ -731,7 +727,6 @@
       <dependency>
         <groupId>org.apache.spark</groupId>
         <artifactId>spark-core_2.11</artifactId>
-
         <version>${spark.version}</version>
       </dependency>
 
