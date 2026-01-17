@@ -35,12 +35,12 @@ public class PersistentTypeInfo<T extends PersistentBase> extends GenericTypeInf
   }
 
   public TypeSerializer<T> createSerializer(ExecutionConfig config) {
-    if (config.hasGenericTypesDisabled()) {
-      throw new UnsupportedOperationException("Generic types have been disabled in the ExecutionConfig and type "
-              + getTypeClass().getName() + " is treated as a generic type.");
-    } else {
-      return new PersistentTypeSerializer<T>(getTypeClass());
-    }
+//    if (config.hasGenericTypesDisabled()) {
+//      throw new UnsupportedOperationException("Generic types have been disabled in the ExecutionConfig and type "
+//              + getTypeClass().getName() + " is treated as a generic type.");
+//    } else {
+//      return new PersistentTypeSerializer<T>(getTypeClass());
+//    }
+    return new PersistentTypeSerializer<T>(getTypeClass());
   }
-
 }

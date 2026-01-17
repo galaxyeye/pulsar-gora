@@ -18,7 +18,8 @@
 
 package org.apache.gora.flink;
 
-import org.apache.flink.api.common.typeutils.base.ByteValueSerializer;
+import org.apache.commons.lang3.NotImplementedException;
+import org.apache.flink.api.common.typeutils.TypeSerializerSnapshot;
 import org.apache.flink.api.common.typeutils.base.TypeSerializerSingleton;
 import org.apache.flink.api.java.typeutils.runtime.DataInputViewStream;
 import org.apache.flink.api.java.typeutils.runtime.DataOutputViewStream;
@@ -106,12 +107,8 @@ public class PersistentTypeSerializer<T extends PersistentBase> extends TypeSeri
     this.serialize(record, target);
   }
 
-  public boolean canEqual(Object obj) {
-    return obj instanceof PersistentTypeSerializer;
-  }
-
-  protected boolean isCompatibleSerializationFormatIdentifier(String identifier) {
-    return super.isCompatibleSerializationFormatIdentifier(identifier) ||
-            identifier.equals(ByteValueSerializer.class.getCanonicalName());
+  @Override
+  public TypeSerializerSnapshot<T> snapshotConfiguration() {
+    throw new NotImplementedException("snapshotConfiguration is not implemented yet");
   }
 }
