@@ -39,5 +39,4 @@ public class TestDataFileAvroStore extends TestAvroStore {
   }
   
   //import all tests from super class
-  
 }

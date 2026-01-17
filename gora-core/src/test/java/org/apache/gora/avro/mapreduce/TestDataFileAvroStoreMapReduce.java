@@ -27,14 +27,23 @@ import org.apache.gora.examples.generated.WebPage;
 import org.apache.gora.mapreduce.DataStoreMapReduceTestBase;
 import org.apache.gora.store.DataStore;
 import org.apache.gora.store.DataStoreFactory;
+import org.junit.Before;
+import org.junit.Ignore;
 
 /**
  * Mapreduce tests for {@link DataFileAvroStore}.
  */
+@Ignore("Hadoop is no longer supported")
 public class TestDataFileAvroStoreMapReduce extends DataStoreMapReduceTestBase {
 
   public TestDataFileAvroStoreMapReduce() throws IOException {
     super();
+  }
+
+  @Override
+  @Before
+  public void setUp() throws Exception {
+    super.setUp();
   }
 
   @Override
@@ -47,5 +56,4 @@ public class TestDataFileAvroStoreMapReduce extends DataStoreMapReduceTestBase {
     
     return webPageStore;
   }
-
 }

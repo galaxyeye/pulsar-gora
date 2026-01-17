@@ -20,10 +20,15 @@ package org.apache.gora.mapreduce;
 
 import java.io.IOException;
 
+import com.globalmentor.apache.hadoop.fs.BareLocalFileSystem;
 import org.apache.gora.examples.generated.WebPage;
 import org.apache.gora.store.DataStore;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.hdfs.MiniDFSCluster;
 import org.apache.hadoop.mapred.HadoopTestCase;
 import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapred.MiniMRCluster;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,11 +42,10 @@ import org.slf4j.LoggerFactory;
  * class, which actually only uses {@link MapReduceTestUtils} methods to
  * run the tests.
  */
-public abstract class DataStoreMapReduceTestBase extends HadoopTestCase {
+public abstract class DataStoreMapReduceTestBase extends GoraHadoopTestCase {
   public static final Logger LOG = LoggerFactory.getLogger(DataStoreMapReduceTestBase.class);
 
   private DataStore<String, WebPage> webPageStore;
-  private JobConf job;
 
   public DataStoreMapReduceTestBase(int mrMode, int fsMode, int taskTrackers,
       int dataNodes) throws IOException {
@@ -49,7 +53,8 @@ public abstract class DataStoreMapReduceTestBase extends HadoopTestCase {
   }
 
   public DataStoreMapReduceTestBase() throws IOException {
-    this(HadoopTestCase.CLUSTER_MR, HadoopTestCase.DFS_FS, 2, 2);
+    // this(HadoopTestCase.CLUSTER_MR, HadoopTestCase.DFS_FS, 2, 2);
+    this(HadoopTestCase.LOCAL_MR, HadoopTestCase.DFS_FS, 2, 2);
   }
 
   @Override
@@ -59,7 +64,6 @@ public abstract class DataStoreMapReduceTestBase extends HadoopTestCase {
     try {
       super.setUp();
       webPageStore = createWebPageDataStore();
-      job = createJobConf();
     } catch (Exception e) {
       LOG.error("Hadoop Test Case set up failed", e);
       // cleanup
@@ -79,7 +83,7 @@ public abstract class DataStoreMapReduceTestBase extends HadoopTestCase {
 
   @Test
   public void testCountQuery() throws Exception {
-    MapReduceTestUtils.testCountQuery(webPageStore, job);
+    MapReduceTestUtils.testCountQuery(webPageStore, getJob());
   }
 
  // TODO The correct implementation for this test need to be created

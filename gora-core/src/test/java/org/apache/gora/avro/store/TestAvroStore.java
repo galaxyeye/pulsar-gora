@@ -24,6 +24,7 @@ import static org.apache.gora.examples.WebPageDataCreator.createWebPageData;
 
 import java.io.IOException;
 
+import com.globalmentor.apache.hadoop.fs.BareLocalFileSystem;
 import org.apache.gora.avro.store.AvroStore.CodecType;
 import org.apache.gora.examples.generated.Employee;
 import org.apache.gora.examples.generated.WebPage;
@@ -34,7 +35,9 @@ import org.apache.gora.store.DataStoreFactory;
 import org.apache.gora.store.DataStoreTestUtil;
 import org.apache.gora.util.GoraException;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.mapred.JobConf;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,10 +48,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestAvroStore {
 
-  public static final String EMPLOYEE_OUTPUT =
-    System.getProperty("test.build.data") + "/testavrostore/employee.data";
-  public static final String WEBPAGE_OUTPUT =
-    System.getProperty("test.build.data") + "/testavrostore/webpage.data";
+  public static final String EMPLOYEE_OUTPUT = "testavrostore/employee.data";
+  public static final String WEBPAGE_OUTPUT = "testavrostore/webpage.data";
 
   protected AvroStore<String,Employee> employeeStore;
   protected AvroStore<String,WebPage> webPageStore;
@@ -56,6 +57,8 @@ public class TestAvroStore {
 
   @Before
   public void setUp() throws Exception {
+    conf.setClass("fs.file.impl", BareLocalFileSystem.class, FileSystem.class);
+
     employeeStore = createEmployeeDataStore();
     employeeStore.initialize(String.class, Employee.class, DataStoreFactory.createProps());
     employeeStore.setOutputPath(EMPLOYEE_OUTPUT);

@@ -1,5 +1,7 @@
 # Apache Gora Project
 
+> DO NOT USE THIS PROJECT RIGHT NOW.
+
 > The Apache Gora version maintained by platon.ai, primarily aimed at continuously upgrading gora-mongodb.
 
 <img src="http://gora.apache.org/resources/img/powered-by-gora.png" align="right" width="300" />

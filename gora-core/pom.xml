@@ -43,15 +43,25 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>3.6.0</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
-            <id>add-examples-source</id>
-            <phase>generate-sources</phase>
             <goals>
-              <goal>add-source</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
             </goals>
             <configuration>
               <sources>
@@ -154,6 +164,13 @@
       <scope>test</scope>
     </dependency>
 
+
+    <!-- Use BareLocalFileSystem, see https://stackoverflow.com/questions/73503205 -->
+    <dependency>
+      <groupId>com.globalmentor</groupId>
+      <artifactId>hadoop-bare-naked-local-fs</artifactId>
+      <version>0.1.0</version>
+    </dependency>
   </dependencies>
 
 </project>
