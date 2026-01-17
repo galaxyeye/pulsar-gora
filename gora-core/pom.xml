@@ -79,7 +79,7 @@
         <!-- Spark dependency -->
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.11</artifactId>
+            <artifactId>spark-core_2.13</artifactId>
         </dependency>
 
         <!-- Flink dependencies -->
@@ -93,10 +93,10 @@
             <artifactId>flink-hadoop-compatibility</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-java</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.flink</groupId>-->
+<!--            <artifactId>flink-java</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.flink</groupId>

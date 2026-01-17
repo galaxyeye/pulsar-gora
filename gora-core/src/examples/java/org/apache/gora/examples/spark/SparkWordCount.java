@@ -20,6 +20,7 @@ package org.apache.gora.examples.spark;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.gora.examples.generated.TokenDatum;
@@ -32,6 +33,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
@@ -52,15 +54,13 @@ public class SparkWordCount {
    * This method would flattened WebPage data and return an Iterable list of
    * words. The map Function would use this as an input.
    */
-  private static Function<WebPage, Iterable<String>> flatMapFun = new Function<WebPage, Iterable<String>>() {
-    private static final long serialVersionUID = 1L;
-    
+  private static FlatMapFunction<WebPage, String> flatMapFun = new FlatMapFunction<WebPage, String>() {
     @Override
-    public Iterable<String> call(WebPage page) throws Exception {
-      String content = "";
-      if (page.getContent() != null)
-        content = new String(page.getContent().array(), Charset.defaultCharset());
-      return Arrays.asList(content.split(" "));
+    public Iterator<String> call(WebPage page) throws Exception {
+        String content = "";
+        if (page.getContent() != null)
+            content = new String(page.getContent().array(), Charset.defaultCharset());
+        return Arrays.asList(content.split(" ")).iterator();
     }
   };
 
