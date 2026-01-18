@@ -40,13 +40,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.gora</groupId>
-      <artifactId>gora-core</artifactId>
-      <type>test-jar</type>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <scope>test</scope>
@@ -93,10 +86,10 @@
     </dependency>
     <!-- END of Logging Dependencies -->
 
-    <!-- Testing Dependencies -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.apache.gora</groupId>
+      <artifactId>gora-core</artifactId>
+      <type>test-jar</type>
       <scope>test</scope>
     </dependency>
 
