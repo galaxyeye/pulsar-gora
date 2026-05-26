@@ -60,36 +60,6 @@ public abstract class TestMongoStore extends DataStoreTestBase {
     return (GoraMongodbTestDriver) testDriver;
   }
 
-  @Ignore("Skip until GORA-66 is fixed: need better semantic for end/start keys")
-  @Override
-  public void testDeleteByQueryFields() throws IOException {
-    // Skip until GORA-66 is fixed: need better semantic for end/start keys
-  }
-
-  @Ignore("Skip until GORA-66 is fixed: need better semantic for end/start keys")
-  @Override
-  public void testQueryKeyRange() throws Exception {
-    // Skip until GORA-66 is fixed: need better semantic for end/start keys
-  }
-  
-  @Ignore("Skip until GORA-66 is fixed: need better semantic for end/start keys")
-  @Override
-  public void testResultSizeKeyRange() throws Exception {
-    // Skip until GORA-66 is fixed: need better semantic for end/start keys
-  }
-  
-  @Ignore("Skip until GORA-66 is fixed: need better semantic for end/start keys")
-  @Override
-  public void testResultSizeKeyRangeWithLimit() throws Exception {
-    // Skip until GORA-66 is fixed: need better semantic for end/start keys
-  }
-  
-  @Ignore("MongoStore doesn't support 3 types union field yet")
-  @Override
-  public void testGet3UnionField() throws Exception {
-    // MongoStore doesn't support 3 types union field yet
-  }
-
   @Test
   public void testFromMongoList_null() throws Exception {
     MongoStore store = new MongoStore();
