@@ -121,6 +121,16 @@
       <artifactId>hadoop-bare-naked-local-fs</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.21.0</version>
+      <scope>compile</scope>
+    </dependency>
     <!-- END of Testing Dependencies -->
   </dependencies>
 
