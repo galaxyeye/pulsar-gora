@@ -113,11 +113,7 @@
             <artifactId>guava</artifactId>
         </dependency>
 
-        <!-- Logging Dependencies -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
+        <!-- Logging API -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -134,13 +130,22 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-minicluster</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-reload4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>ch.qos.reload4j</groupId>
+                    <artifactId>reload4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- Use BareLocalFileSystem, see https://stackoverflow.com/questions/73503205 -->
+        <!-- Source: https://mvnrepository.com/artifact/com.sparkutils/hadoop-bare-naked-local-fs -->
         <dependency>
-            <groupId>com.globalmentor</groupId>
+            <groupId>com.sparkutils</groupId>
             <artifactId>hadoop-bare-naked-local-fs</artifactId>
-            <version>0.1.0</version>
         </dependency>
     </dependencies>
 

@@ -65,9 +65,14 @@ public abstract class DataStoreTestBase {
 
   @AfterClass
   public static void tearDownClass() throws Exception {
-    if(testDriver != null) {
-      log.info("tearing down class");
-      testDriver.tearDownClass();
+    try {
+      if(testDriver != null) {
+        log.info("tearing down class");
+        testDriver.tearDownClass();
+      }
+    } finally {
+      testDriver = null;
+      setUpClassCalled = false;
     }
   }
 
@@ -94,8 +99,8 @@ public abstract class DataStoreTestBase {
     if(testDriver != null) {
       testDriver.tearDown();
     }
-    //employeeStore.close();
-    //webPageStore.close();
+    employeeStore.close();
+    webPageStore.close();
   }
 
   @Test

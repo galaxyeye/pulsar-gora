@@ -48,7 +48,7 @@ public class MongoFilterUtil<K, T extends PersistentBase> {
   /**
    * Default implementation class for FilterFactory.
    */
-  public static final String MONGO_FILTERS_DEFAULT_FACTORY = "filters.mongodb.ai.platon.gora.DefaultFactory";
+  public static final String MONGO_FILTERS_DEFAULT_FACTORY = "ai.platon.gora.mongodb.filters.DefaultFactory";
 
   /**
    * Configuration parameter which allow override of FilterFactory used.

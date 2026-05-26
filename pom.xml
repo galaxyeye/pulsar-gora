@@ -760,12 +760,11 @@
         <version>${hadoop-3.test.version}</version>
       </dependency>
 
-
-      <!-- Use BareLocalFileSystem, see https://stackoverflow.com/questions/73503205 -->
+      <!-- Source: https://mvnrepository.com/artifact/com.sparkutils/hadoop-bare-naked-local-fs -->
       <dependency>
-        <groupId>com.globalmentor</groupId>
+        <groupId>com.sparkutils</groupId>
         <artifactId>hadoop-bare-naked-local-fs</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
       </dependency>
 
       <dependency>

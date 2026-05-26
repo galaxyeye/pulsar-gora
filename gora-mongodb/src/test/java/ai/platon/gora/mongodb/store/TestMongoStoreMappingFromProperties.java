@@ -56,14 +56,14 @@ public class TestMongoStoreMappingFromProperties {
         // Simple mapping XML
         String mappingXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<gora-otd>\n" +
-                "    <class name=\"generated.examples.ai.platon.gora.Employee\" keyClass=\"java.lang.String\" document=\"frontier\">\n" +
+                "    <class name=\"ai.platon.gora.examples.generated.Employee\" keyClass=\"java.lang.String\" document=\"frontier\">\n" +
                 "        <field name=\"name\" docfield=\"name\" type=\"string\"/>\n" +
                 "    </class>\n" +
                 "</gora-otd>";
 
         // Initiate the MongoDB server on the default port
         int port = _container.getFirstMappedPort();
-        String host = _container.getContainerIpAddress();
+        String host = _container.getHost();
 
         Properties prop = DataStoreFactory.createProps();
 

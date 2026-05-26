@@ -26,6 +26,7 @@ import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStoreTestBase;
 import ai.platon.gora.util.GoraException;
 import org.bson.Document;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -46,6 +47,12 @@ public abstract class TestMongoStore extends DataStoreTestBase {
   public void setUp() throws Exception {
     super.setUp();
     keySequence = 1;
+  }
+
+  @After
+  @Override
+  public void tearDown() throws Exception {
+    super.tearDown();
   }
 
   public GoraMongodbTestDriver getTestDriver() {
