@@ -22,7 +22,7 @@ package $schema.getNamespace();
 #if ($schema.getDoc())
 /** $schema.getDoc() */
 #end
-public class ${this.mangle($schema.getName())}#if ($schema.isError()) extends org.apache.avro.specific.SpecificExceptionBase#else extends org.apache.gora.persistency.impl.PersistentBase#end implements org.apache.avro.specific.SpecificRecord, org.apache.gora.persistency.Persistent {
+public class ${this.mangle($schema.getName())}#if ($schema.isError()) extends org.apache.avro.specific.SpecificExceptionBase#else extends impl.persistency.ai.platon.gora.PersistentBase#end implements org.apache.avro.specific.SpecificRecord, persistency.ai.platon.gora.Persistent {
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("${this.javaEscape($schema.toString())}");
   private static final long serialVersionUID = ${this.fingerprint64($schema)}L;
   /** Enum containing all data bean's fields. */
@@ -322,7 +322,7 @@ public class ${this.mangle($schema.getName())}#if ($schema.isError()) extends or
 
   private static final Tombstone TOMBSTONE = new Tombstone();
   
-  public static final class Tombstone extends ${this.mangle($schema.getName())} implements org.apache.gora.persistency.Tombstone {
+  public static final class Tombstone extends ${this.mangle($schema.getName())} implements persistency.ai.platon.gora.Tombstone {
   
     private Tombstone() { }
   

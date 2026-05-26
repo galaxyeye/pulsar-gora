@@ -134,7 +134,7 @@ Bug
 
     [GORA-291] - Gora-core, unable to wire up packages not known in advance.
     [GORA-293] - getDatastore use Class.forName() when use String parameters for dataStoreClass
-    [GORA-367] - testCountQuery(org.apache.gora.avro.mapreduce.TestDataFileAvroStoreMapReduce) failing in new environments
+    [GORA-367] - testCountQuery(mapreduce.avro.ai.platon.gora.TestDataFileAvroStoreMapReduce) failing in new environments
     [GORA-398] - Create and initialize Gora master Jenkins job which uses Hadoop 2.X shims
     [GORA-401] - Serialization and deserialization of Persistent does not hold the entity dirty state from Map to Reduce
     [GORA-438] - Erroneous Exception Message at IOUtils.java
@@ -456,7 +456,7 @@ Release Report: https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId
 
 * GORA-178 HBase fix ivy.xml to use the correct antconfig mapping (ferdy) 
 
-* GORA-172 java.lang.ClassNotFoundException: org.apache.gora.memory.store.MemStore.MemQuery (yumeng via lewismc)
+* GORA-172 java.lang.ClassNotFoundException: store.memory.ai.platon.gora.MemStore.MemQuery (yumeng via lewismc)
 
 * GORA-103 Datastore for gora-dynamodb (rmarroquin via lewismc)
 

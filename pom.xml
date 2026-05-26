@@ -642,15 +642,6 @@
         <scope>import</scope>
       </dependency>
 
-
-
-<!--      <dependency>-->
-<!--        <groupId>org.apache.hadoop</groupId>-->
-<!--        <artifactId>hadoop-client</artifactId>-->
-<!--        <optional>true</optional>-->
-<!--        <version>${hadoop-3.version}</version>-->
-<!--      </dependency>-->
-
       <dependency>
         <groupId>org.apache.avro</groupId>
         <artifactId>avro</artifactId>
@@ -757,7 +748,6 @@
     <!--     <jackson.version>1.6.9</jackson.version> -->
     <!-- Hadoop Dependencies -->
 
-    <hadoop-3.version>3.4.2</hadoop-3.version>
     <hadoop-3.test.version>3.4.2</hadoop-3.test.version>
 
     <flink.version>2.2.1</flink.version>
