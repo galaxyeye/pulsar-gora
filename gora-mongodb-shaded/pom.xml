@@ -82,6 +82,7 @@
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <shadedArtifactAttached>false</shadedArtifactAttached>
+              <minimizeJar>true</minimizeJar>
               <filters>
                 <filter>
                   <artifact>ai.platon.gora:gora-core</artifact>
