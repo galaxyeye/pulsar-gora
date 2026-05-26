@@ -43,7 +43,7 @@ public class TestDataStoreFactory {
   @Test
   public void testGetDataStore() throws GoraException {
     DataStore<?, ?> dataStore = DataStoreFactory.getDataStore(
-        "store.mock.ai.platon.gora.MockDataStore", String.class,
+        "ai.platon.gora.mock.store.MockDataStore", String.class,
         MockPersistent.class, conf);
     assertNotNull(dataStore);
   }
@@ -51,7 +51,7 @@ public class TestDataStoreFactory {
   @Test
   public void testGetClasses() throws GoraException {
     DataStore<?, ?> dataStore = DataStoreFactory.getDataStore(
-        "store.mock.ai.platon.gora.MockDataStore", String.class,
+        "ai.platon.gora.mock.store.MockDataStore", String.class,
         MockPersistent.class, conf);
     assertNotNull(dataStore);
     assertEquals(String.class, dataStore.getKeyClass());
@@ -68,13 +68,13 @@ public class TestDataStoreFactory {
   @Test
   public void testGetDataStore3() throws GoraException {
     DataStore<?, ?> dataStore1 = DataStoreFactory.getDataStore(
-        "store.mock.ai.platon.gora.MockDataStore", Object.class,
+        "ai.platon.gora.mock.store.MockDataStore", Object.class,
         MockPersistent.class, conf);
     DataStore<?, ?> dataStore2 = DataStoreFactory.getDataStore(
-        "store.mock.ai.platon.gora.MockDataStore", Object.class,
+        "ai.platon.gora.mock.store.MockDataStore", Object.class,
         MockPersistent.class, conf);
     DataStore<?, ?> dataStore3 = DataStoreFactory.getDataStore(
-        "store.mock.ai.platon.gora.MockDataStore", String.class,
+        "ai.platon.gora.mock.store.MockDataStore", String.class,
         MockPersistent.class, conf);
 
     assertNotSame(dataStore1, dataStore2);
