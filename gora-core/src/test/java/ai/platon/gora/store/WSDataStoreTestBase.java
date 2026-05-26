@@ -275,20 +275,6 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
 
   @Ignore
   public void assertTestDeleteDataStore(){}
-  
-  @Test
-  public void testDeleteByQuery() throws Exception {
-    log.info("test method: testDeleteByQuery");
-    assertTestDeleteByQueryDataStore();
-  }
 
-  @Ignore
-  public void assertTestDeleteByQueryDataStore(){
-  }
-  
-  @Test
-  public void testDeleteByQueryFields() throws Exception {
-    log.info("test method: testQueryByQueryFields");
-  }
 
 }

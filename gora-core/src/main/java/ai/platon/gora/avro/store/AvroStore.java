@@ -132,10 +132,6 @@ public class AvroStore<K, T extends PersistentBase>
     throw new OperationNotSupportedException("delete is not supported for AvroStore");
   }
 
-  @Override
-  public long deleteByQuery(Query<K, T> query) throws GoraException {
-    throw new OperationNotSupportedException("delete is not supported for AvroStore");
-  }
 
   /**
    * Executes a normal Query reading the whole data. #execute() calls this function

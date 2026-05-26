@@ -466,17 +466,6 @@ DataStoreBase<K, T> {
     }
   }
 
-  @Override
-  public long deleteByQuery(final Query<K, T> query) throws GoraException {
-    try {
-      // Build the actual MongoDB query
-      Bson q = MongoDBQuery.toDBQuery(query);
-      DeleteResult writeResult = mongoClientColl.deleteMany(q);
-      return writeResult.getDeletedCount();
-    } catch (Exception e) {
-      throw new GoraException(e);
-    }
-  }
 
   /**
    * Execute the query and return the result.

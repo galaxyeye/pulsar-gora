@@ -358,17 +358,6 @@ public abstract class DataStoreTestBase {
     DataStoreTestUtil.testDelete(webPageStore);
   }
 
-  @Test
-  public void testDeleteByQuery() throws Exception {
-    log.info("test method: testDeleteByQuery");
-    DataStoreTestUtil.testDeleteByQuery(webPageStore);
-  }
-
-  @Test
-  public void testDeleteByQueryFields() throws Exception {
-    log.info("test method: testQueryByQueryFields");
-    DataStoreTestUtil.testDeleteByQueryFields(webPageStore);
-  }
 
   @Test
   public void testGetPartitions() throws Exception {

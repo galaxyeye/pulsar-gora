@@ -19,12 +19,7 @@
 package ai.platon.gora.memory.store;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NavigableMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.avro.Schema.Field;
@@ -112,39 +107,6 @@ public class MemStore<K, T extends PersistentBase> extends DataStoreBase<K, T> {
     return map.remove(key) != null;
   }
 
-  @Override
-  public long deleteByQuery(Query<K, T> query) {
-    try {
-      long deletedRows = 0;
-      Result<K, T> result = query.execute();
-
-      String[] fields = getFieldsToQuery(query.getFields());
-      boolean isAllFields = Arrays.equals(fields, getFields());
-
-      while (result.next()) {
-        if (isAllFields) {
-          if (delete(result.getKey())) {
-            deletedRows++;
-          }
-        } else {
-          ArrayList<String> excludedFields = new ArrayList<>();
-          for (String field : getFields()) {
-            if (!Arrays.asList(fields).contains(field)) {
-              excludedFields.add(field);
-            }
-          }
-          T newClonedObj = getPersistent(result.get(),excludedFields.toArray(new String[excludedFields.size()]));
-          if (delete(result.getKey())) {
-            put(result.getKey(),newClonedObj);
-            deletedRows++;
-          }
-        }
-      }
-      return deletedRows;
-    } catch (Exception e) {
-      return 0;
-    }
-  }
 
   /**
    * An important feature of {@link MemStore#execute(Query)} is

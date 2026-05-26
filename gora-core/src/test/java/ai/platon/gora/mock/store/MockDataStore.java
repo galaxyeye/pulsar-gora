@@ -85,10 +85,6 @@ public class MockDataStore extends DataStoreBase<String, MockPersistent> {
     return false;
   }
 
-  @Override
-  public long deleteByQuery(Query<String, MockPersistent> query) {
-    return 0;
-  }
 
   @Override
   public Result<String, MockPersistent> execute(Query<String, MockPersistent> query) throws GoraException {
