@@ -22,7 +22,7 @@ import org.apache.gora.mongodb.GoraMongodbTestDriver;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 /**
  * Created by drazzib on 24/05/14.

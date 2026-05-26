@@ -23,7 +23,7 @@ import org.apache.gora.mongodb.store.MongoStore;
 import org.apache.gora.mongodb.store.MongoStoreParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 /**
  * Driver to set up an embedded MongoDB database instance for use in our
@@ -50,8 +50,13 @@ public class GoraMongodbTestDriver extends GoraTestDriver {
    */
   @Override
   public void setUpClass() {
+    if (!_container.isRunning()) {
+      log.info("Starting the embedded MongoDB server");
+      _container.start();
+    }
+
     int port = _container.getMappedPort(27017);
-    String host = _container.getContainerIpAddress();
+    String host = _container.getHost();
 
     // Store Mongo server "host:port" in Hadoop configuration
     // so that MongoStore will be able to get it latter
@@ -63,6 +68,10 @@ public class GoraMongodbTestDriver extends GoraTestDriver {
    */
   @Override
   public void tearDownClass() {
+    if (_container != null && _container.isRunning()) {
+      log.info("Stopping the embedded MongoDB server");
+      _container.stop();
+    }
   }
 
 }

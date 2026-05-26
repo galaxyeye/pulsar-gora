@@ -25,7 +25,7 @@ import org.apache.gora.store.DataStoreFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

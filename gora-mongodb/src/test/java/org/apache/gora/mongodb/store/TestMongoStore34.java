@@ -19,14 +19,13 @@ package org.apache.gora.mongodb.store;
 
 import org.apache.gora.mongodb.GoraMongodbTestDriver;
 import org.junit.ClassRule;
-import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.mongodb.MongoDBContainer;
 
 /**
  * Perform {@link TestMongoStore} tests on MongoDB 3.4.x server.
  */
 public class TestMongoStore34 extends TestMongoStore {
 
-  @ClassRule
   public final static MongoDBContainer container = new MongoDBContainer("mongo:3.4");
 
   static {
