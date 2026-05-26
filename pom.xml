@@ -337,12 +337,12 @@
     </repository>
   </repositories>
 
-  <!-- Required by dokka-maven-plugin -->
+  <!-- Plugin repository for tools that require explicit plugin resolution -->
   <pluginRepositories>
     <pluginRepository>
-      <id>jcenter</id>
-      <name>JCenter</name>
-      <url>https://jcenter.bintray.com/</url>
+      <id>central</id>
+      <name>Maven Central</name>
+      <url>https://repo1.maven.org/maven2/</url>
     </pluginRepository>
   </pluginRepositories>
 
@@ -430,7 +430,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${maven-javadoc-plugin.version}</version>
+          <version>${version.maven-javadoc-plugin}</version>
           <configuration>
             <excludePackageNames>ai.platon.gora.tutorial.log.generated;ai.platon.gora.goraci.generated;ai.platon.gora.benchmark.generated;</excludePackageNames>
           </configuration>

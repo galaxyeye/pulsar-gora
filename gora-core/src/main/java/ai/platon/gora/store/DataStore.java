@@ -34,7 +34,7 @@ import ai.platon.gora.util.GoraException;
  * constructed by an instance of {@link DataStoreFactory}.
  *
  * <p> DataStores implementations should be thread safe.</p>
- * <p><a name="visibility"><b>Note:</b></a> Results of updates ({@link #put(Object, Persistent)},
+ * <p><b id="visibility">Note:</b> Results of updates ({@link #put(Object, Persistent)},
  * {@link #delete(Object)} and {@link #deleteByQuery(Query)} operations) are
  * guaranteed to be visible to subsequent get / execute operations ONLY
  * after a subsequent call to {@link #flush()}. Additionally, exception
