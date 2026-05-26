@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        java: [ '1.8' ]
+        java: [ '17' ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -49,10 +49,10 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build
-        run: mvn $MAVEN_CLI_OPTS --fail-at-end -DskipTests clean install
+        run: ./mvnw $MAVEN_CLI_OPTS --fail-at-end -DskipTests clean install
 
       - name: Test
-        run: mvn $MAVEN_CLI_OPTS --fail-at-end verify
+        run: ./mvnw $MAVEN_CLI_OPTS --fail-at-end verify
 
       - name: Publish Test Results
         if: ${{ always() }}

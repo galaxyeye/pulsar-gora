@@ -18,6 +18,19 @@ key value stores, document stores and RDBMSs, and analyzing the data
 with extensive Apache Hadoop MapReduce, Apache Spark, Apache Flink 
 and Apache Pig support.  
 
+## Build requirements
+
+- Minimum supported JDK: 17
+- Apache Gora no longer supports JDK 8
+- Build from the project root with the Maven Wrapper (`./mvnw` on Unix-like systems, `mvnw.cmd` on Windows)
+
+### Build commands
+
+```bash
+./mvnw clean install
+./mvnw verify
+```
+
 ## Why Gora?
 
 Although there are various excellent ORM frameworks for relational
