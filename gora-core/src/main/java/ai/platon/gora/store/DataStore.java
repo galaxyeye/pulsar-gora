@@ -25,7 +25,6 @@ import ai.platon.gora.persistency.BeanFactory;
 import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.query.PartitionQuery;
 import ai.platon.gora.query.Query;
-import ai.platon.gora.query.Result;
 import ai.platon.gora.util.GoraException;
 
 /**
@@ -36,7 +35,7 @@ import ai.platon.gora.util.GoraException;
  * <p> DataStores implementations should be thread safe.</p>
  * <p><b id="visibility">Note:</b> Results of updates ({@link #put(Object, Persistent)}
  * and {@link #delete(Object)} operations) are
- * guaranteed to be visible to subsequent get / execute operations ONLY
+ * guaranteed to be visible to subsequent get operations ONLY
  * after a subsequent call to {@link #flush()}. Additionally, exception
  * handling is largely DataStore specific and is not largely dealt
  * with from within this interface.
@@ -143,7 +142,6 @@ public interface DataStore<K, T extends Persistent> {
    */
   boolean exists(K key) throws GoraException;
 
-
 	/**
    * Returns the object corresponding to the given key fetching all the fields.
    * @param key the key of the object.
@@ -181,20 +179,6 @@ public interface DataStore<K, T extends Persistent> {
    */
   boolean delete(K key) throws GoraException;
 
-
-  /**
-   * Executes the given query and returns the results.
-   * @param query the query to execute.
-   * @return the results as a {@link Result} object.
-   * @throws GoraException If any error occurred.
-   */
-  Result<K, T> execute(Query<K, T> query) throws GoraException;
-
-  /**
-   * Constructs and returns a new Query.
-   * @return a new Query.
-   */
-  Query<K, T> newQuery();
 
   /**
    * Partitions the given query and returns a list of {@link PartitionQuery}s,

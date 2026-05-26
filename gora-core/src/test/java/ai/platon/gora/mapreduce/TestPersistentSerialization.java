@@ -106,7 +106,7 @@ public class TestPersistentSerialization {
             MemStore.class, String.class, WebPage.class, new Configuration());
     WebPageDataCreator.createWebPageData(store);
 
-    Result<String, WebPage> result = store.newQuery().execute();
+    Result<String, WebPage> result = new MemStore.MemQuery<String, WebPage>(store).execute();
 
     int i = 0;
     while (result.next()) {

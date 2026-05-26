@@ -83,7 +83,6 @@ public class MemStoreTest extends DataStoreTestBase {
 
     @Test
     public void testGetWithFields() throws Exception {
-
         DataStore<String, WebPage> store = new MemStore<>();
         BeanFactory<String, WebPage> beanFactory = new BeanFactoryImpl<>(String.class, WebPage.class);
         store.setBeanFactory(beanFactory);
@@ -98,5 +97,3 @@ public class MemStoreTest extends DataStoreTestBase {
         assertTrue(page.getParsedContent().size() > 0);
     }
 }
-
-

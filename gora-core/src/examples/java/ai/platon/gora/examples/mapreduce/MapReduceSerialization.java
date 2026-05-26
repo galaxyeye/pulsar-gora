@@ -25,6 +25,7 @@ import ai.platon.gora.mapreduce.GoraMapper;
 import ai.platon.gora.mapreduce.GoraReducer;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.store.DataStore;
+import ai.platon.gora.store.impl.DataStoreBase;
 import ai.platon.gora.store.DataStoreFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -119,7 +120,7 @@ public class MapReduceSerialization extends Configured implements Tool {
   public int mapReduceSerialization(DataStore<String, WebPage> inStore,
                                     DataStore<String, WebPage> outStore)
           throws IOException, InterruptedException, ClassNotFoundException {
-    Query<String, WebPage> query = inStore.newQuery();
+    Query<String, WebPage> query = ((DataStoreBase<String,WebPage>)inStore).newQuery();
     query.setFields("url");
 
     Job job = createJob(inStore, query, outStore);

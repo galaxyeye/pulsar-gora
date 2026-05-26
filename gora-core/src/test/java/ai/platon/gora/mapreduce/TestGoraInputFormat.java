@@ -43,7 +43,7 @@ public class TestGoraInputFormat {
     Job job = Job.getInstance(new Configuration());
     MockDataStore store = MockDataStore.get();
 
-    MockQuery query = store.newQuery();
+    MockQuery query = new MockQuery(store);
     
     query.setFields(getEmployeeFieldNames());
     GoraInputFormat.setInput(job, query, false);

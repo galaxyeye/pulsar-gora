@@ -471,13 +471,13 @@ DataStoreBase<K, T> {
    * Execute the query and return the result.
    */
   @Override
-  public Result<K, T> execute(final Query<K, T> query) throws GoraException {
+  public Result<K, T> executeQuery(final Query<K, T> query) throws IOException {
     try {
       String[] fields = getFieldsToQuery(query.getFields());
       // Build the actual MongoDB query
       Bson q = MongoDBQuery.toDBQuery(query);
       Bson p = MongoDBQuery.toProjection(fields, mapping);
-  
+
       if (query.getFilter() != null) {
         Optional<Bson> filter = filterUtil.setFilter(query.getFilter(), this);
         if (!filter.isPresent()) {
@@ -487,7 +487,7 @@ DataStoreBase<K, T> {
           q = and(q, filter.get());
         }
       }
-  
+
       // Execute the query on the collection
       FindIterable<Document> iterable = mongoClientColl.find(q).projection(p);
       CountOptions countOptions = new CountOptions();
@@ -502,7 +502,7 @@ DataStoreBase<K, T> {
       long size = mongoClientColl.countDocuments(q, countOptions);
       return new MongoDBResult<>(this, query, iterable.cursor(), size);
     } catch(Exception e) {
-      throw new GoraException(e);
+      throw new IOException(e);
     }
   }
 

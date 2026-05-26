@@ -48,23 +48,11 @@ public abstract class WSBackedDataStoreBase<K, T extends Persistent>
     super.initialize(keyClass, persistentClass, properties);
   }
 
-  @Override
-  /**
-   * Executes a query inside a web service backed data store
-   */
-  public Result<K, T> execute(Query<K, T> query) throws GoraException {
-    try {
-      return executeQuery(query);
-    } catch (IOException e) {
-      throw new GoraException(e);
-    }
-  }
-
   /**
    * Executes a normal Query reading the whole data. #execute() calls this function
    * for non-PartitionQuery's.
    */
-  protected abstract Result<K,T> executeQuery(Query<K,T> query)
+  public abstract Result<K,T> executeQuery(Query<K,T> query)
     throws IOException;
 
   @Override

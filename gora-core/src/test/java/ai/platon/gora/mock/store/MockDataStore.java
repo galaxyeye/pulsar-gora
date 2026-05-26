@@ -87,7 +87,7 @@ public class MockDataStore extends DataStoreBase<String, MockPersistent> {
 
 
   @Override
-  public Result<String, MockPersistent> execute(Query<String, MockPersistent> query) throws GoraException {
+  public Result<String, MockPersistent> executeQuery(Query<String, MockPersistent> query) throws IOException {
     return new MockResult<String, MockPersistent>(this, query);
   }
 

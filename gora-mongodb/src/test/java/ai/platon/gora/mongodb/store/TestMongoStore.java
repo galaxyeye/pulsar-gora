@@ -24,6 +24,7 @@ import ai.platon.gora.mongodb.utils.BSONDecorator;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStoreTestBase;
+import ai.platon.gora.store.impl.DataStoreBase;
 import ai.platon.gora.util.GoraException;
 import org.bson.Document;
 import org.junit.After;
@@ -134,25 +135,25 @@ public abstract class TestMongoStore extends DataStoreTestBase {
     Query<String, WebPage> q;
 
     // empty
-    q = webPageStore.newQuery();
+    q = ((DataStoreBase<String,WebPage>)webPageStore).newQuery();
     assertProgress(q, 1);
 
     addWebPage();
 
     // one
-    q = webPageStore.newQuery();
+    q = ((DataStoreBase<String,WebPage>)webPageStore).newQuery();
     assertProgress(q, 0, 1);
 
     addWebPage();
 
     // two
-    q = webPageStore.newQuery();
+    q = ((DataStoreBase<String,WebPage>)webPageStore).newQuery();
     assertProgress(q, 0, 0.5f, 1);
 
     addWebPage();
 
     // three
-    q = webPageStore.newQuery();
+    q = ((DataStoreBase<String,WebPage>)webPageStore).newQuery();
     assertProgress(q, 0, 0.33f, 0.66f, 1);
   }
 
@@ -161,14 +162,14 @@ public abstract class TestMongoStore extends DataStoreTestBase {
     for (int i = 0; i < 5; i++) {
       addWebPage();
     }
-    Query<String, WebPage> q = webPageStore.newQuery();
+    Query<String, WebPage> q = ((DataStoreBase<String,WebPage>)webPageStore).newQuery();
     q.setLimit(2);
 
     assertProgress(q, 0, 0.5f, 1);
   }
 
   private void assertProgress(Query<String, WebPage> q, float... progress) throws Exception {
-    Result<String, WebPage> r = webPageStore.execute(q);
+    Result<String, WebPage> r = q.execute();
     int i = 0;
     do {
       assertEquals(progress[i++], r.getProgress(), 0.01f);

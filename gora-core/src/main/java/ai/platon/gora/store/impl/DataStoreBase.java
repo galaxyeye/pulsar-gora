@@ -37,6 +37,8 @@ import ai.platon.gora.persistency.BeanFactory;
 import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.persistency.impl.BeanFactoryImpl;
 import ai.platon.gora.persistency.impl.PersistentBase;
+import ai.platon.gora.query.Query;
+import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStore;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.util.AvroUtils;
@@ -149,6 +151,10 @@ public abstract class DataStoreBase<K, T extends PersistentBase>
   public BeanFactory<K, T> getBeanFactory() {
     return beanFactory;
   }
+
+  public abstract Result<K,T> executeQuery(Query<K,T> query) throws IOException;
+
+  public abstract Query<K,T> newQuery();
 
   @Override
   public T get(K key) throws GoraException {

@@ -18,9 +18,12 @@
 
 package ai.platon.gora.store.ws.impl;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import ai.platon.gora.persistency.Persistent;
+import ai.platon.gora.query.Query;
+import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStore;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.util.GoraException;
@@ -143,6 +146,10 @@ implements DataStore<K, T>{
    */
   public void write(Object obj) throws Exception {
   }
+
+  public abstract Result<K,T> executeQuery(Query<K,T> query) throws IOException;
+
+  public abstract Query<K,T> newQuery();
 
   @Override
   public boolean equals(Object obj) {

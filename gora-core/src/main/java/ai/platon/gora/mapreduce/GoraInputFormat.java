@@ -28,6 +28,7 @@ import ai.platon.gora.query.Query;
 import ai.platon.gora.query.impl.FileSplitPartitionQuery;
 import ai.platon.gora.store.DataStore;
 import ai.platon.gora.store.DataStoreFactory;
+import ai.platon.gora.store.impl.DataStoreBase;
 import ai.platon.gora.store.FileBackedDataStore;
 import ai.platon.gora.util.IOUtils;
 import org.apache.hadoop.conf.Configurable;
@@ -169,6 +170,8 @@ public class GoraInputFormat<K, T extends PersistentBase>
 
     DataStore<K1,V1> store = DataStoreFactory.getDataStore(dataStoreClass
         , inKeyClass, inValueClass, job.getConfiguration());
-    setInput(job, store.newQuery(), reuseObjects);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    Query<K1,V1> query = ((DataStoreBase)store).newQuery();
+    setInput(job, query, reuseObjects);
   }
 }

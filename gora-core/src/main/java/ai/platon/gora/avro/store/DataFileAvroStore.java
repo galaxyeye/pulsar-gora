@@ -73,7 +73,7 @@ public class DataFileAvroStore<K, T extends PersistentBase> extends AvroStore<K,
   }
   
   @Override
-  protected Result<K, T> executeQuery(Query<K, T> query) throws IOException {
+  protected Result<K, T> executeQueryInternal(Query<K, T> query) throws IOException {
       return new DataFileAvroResult<>(this, query
           , createReader(createFsInput()));
   }

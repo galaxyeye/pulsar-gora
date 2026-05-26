@@ -138,7 +138,7 @@ public class AvroStore<K, T extends PersistentBase>
    * for non-PartitionQuery's.
    */
   @Override
-  protected Result<K,T> executeQuery(Query<K,T> query) throws IOException {
+  protected Result<K,T> executeQueryInternal(Query<K,T> query) throws IOException {
     return new AvroResult<>(this, (AvroQuery<K,T>)query,
             getDatumReader(), getDecoder());
   }

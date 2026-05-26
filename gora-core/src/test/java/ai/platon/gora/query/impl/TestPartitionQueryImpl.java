@@ -34,7 +34,7 @@ public class TestPartitionQueryImpl {
   @Test
   public void testReadWrite() throws Exception {
     
-    MockQuery baseQuery = dataStore.newQuery();
+    MockQuery baseQuery = new MockQuery(dataStore);
     baseQuery.setStartKey("start");
     baseQuery.setLimit(42);
     

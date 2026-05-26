@@ -40,7 +40,7 @@ public class TestGoraInputSplit {
   private List<PartitionQuery<String, MockPersistent>> 
     getPartitions() throws IOException {
     MockDataStore store = MockDataStore.get();
-    MockQuery query = store.newQuery();
+    MockQuery query = new MockQuery(store);
 
     List<PartitionQuery<String, MockPersistent>> partitions =
       store.getPartitions(query);

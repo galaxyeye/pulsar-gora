@@ -109,7 +109,7 @@ public class MemStore<K, T extends PersistentBase> extends DataStoreBase<K, T> {
 
 
   /**
-   * An important feature of {@link MemStore#execute(Query)} is
+   * An important feature of {@link MemStore#executeQuery(Query)} is
    * that when specifying the {@link MemQuery} one should be aware 
    * that when fromKey and toKey are equal, the returned map is empty 
    * unless fromInclusive and toInclusive are both true. On the other hand
@@ -117,7 +117,7 @@ public class MemStore<K, T extends PersistentBase> extends DataStoreBase<K, T> {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public Result<K, T> execute(Query<K, T> query) throws GoraException {
+  public Result<K, T> executeQuery(Query<K, T> query) throws GoraException {
     K startKey = query.getStartKey();
     K endKey = query.getEndKey();
     if(startKey == null) {

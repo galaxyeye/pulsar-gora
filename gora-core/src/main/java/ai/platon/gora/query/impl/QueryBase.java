@@ -71,7 +71,11 @@ public abstract class QueryBase<K, T extends PersistentBase>
 
   @Override
   public Result<K,T> execute() throws GoraException {
-    return dataStore.execute(this);
+    try {
+      return dataStore.executeQuery(this);
+    } catch (IOException e) {
+      throw new GoraException(e);
+    }
   }
 
   @Override

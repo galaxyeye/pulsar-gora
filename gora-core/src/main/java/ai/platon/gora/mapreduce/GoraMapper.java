@@ -22,6 +22,7 @@ import java.io.IOException;
 import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.store.DataStore;
+import ai.platon.gora.store.impl.DataStoreBase;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Partitioner;
@@ -170,7 +171,9 @@ public class GoraMapper<K1, V1 extends Persistent, K2, V2> extends Mapper<K1, V1
       Class<V2> outValueClass,
       Class<? extends GoraMapper> mapperClass, 
       boolean reuseObjects) throws IOException {
-    initMapperJob(job, dataStore.newQuery(),
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    Query<K1,V1> query = ((DataStoreBase)dataStore).newQuery();
+    initMapperJob(job, query,
         outKeyClass, outValueClass, mapperClass, reuseObjects);
   }
 

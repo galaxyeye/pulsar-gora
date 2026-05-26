@@ -39,7 +39,7 @@ public class TestQueryBase {
   
   @Before
   public void setUp() {
-    query = dataStore.newQuery(); //MockQuery extends QueryBase
+    query = new MockQuery(dataStore); //MockQuery extends QueryBase
   }
   
   @Test

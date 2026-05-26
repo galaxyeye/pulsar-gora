@@ -32,6 +32,7 @@ import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStore;
 import ai.platon.gora.store.DataStoreFactory;
+import ai.platon.gora.store.impl.DataStoreBase;
 import ai.platon.gora.store.DataStoreTestUtil;
 import ai.platon.gora.util.GoraException;
 import org.apache.hadoop.conf.Configuration;
@@ -139,7 +140,7 @@ public class TestAvroStore {
   public static void testQueryWebPages(DataStore<String, WebPage> store)
   throws Exception {
 
-    Query<String, WebPage> query = store.newQuery();
+    Query<String, WebPage> query = ((DataStoreBase<String,WebPage>)store).newQuery();
     Result<String, WebPage> result = query.execute();
 
     int i=0;

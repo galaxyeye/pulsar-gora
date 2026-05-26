@@ -18,6 +18,8 @@
 
 package ai.platon.gora.query.ws.impl;
 
+import java.io.IOException;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -26,6 +28,7 @@ import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStore;
+import ai.platon.gora.store.ws.impl.WSDataStoreBase;
 import ai.platon.gora.util.GoraException;
 
 /**
@@ -89,7 +92,11 @@ public abstract class QueryWSBase<K, T extends Persistent> implements Query<K,T>
    */
   public Result<K,T> execute() throws GoraException {
     //compile();
-    return dataStore.execute(this);
+    try {
+      return ((WSDataStoreBase<K,T>)dataStore).executeQuery(this);
+    } catch (IOException e) {
+      throw new GoraException(e);
+    }
   }
 
   @Override

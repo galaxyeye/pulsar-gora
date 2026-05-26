@@ -24,8 +24,8 @@ import ai.platon.gora.store.DataStore;
 import ai.platon.gora.util.GoraException;
 
 /**
- * A query to a data store to retrieve objects. Queries are constructed by 
- * the DataStore implementation via {@link DataStore#newQuery()}.
+ * A query to a data store to retrieve objects. Queries are constructed by
+ * the DataStore implementation.
  */
 public interface Query<K, T extends Persistent> {
 

@@ -53,6 +53,7 @@ import ai.platon.gora.examples.generated.WebPage;
 import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.persistency.impl.BeanFactoryImpl;
 import ai.platon.gora.query.PartitionQuery;
+import ai.platon.gora.store.impl.DataStoreBase;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
 import ai.platon.gora.util.AvroUtils;
@@ -147,7 +148,7 @@ public class DataStoreTestUtil {
     WebPageDataCreator.createWebPageData(dataStore);
     dataStore.truncateSchema();
 
-    assertEmptyResults(dataStore.newQuery());
+    assertEmptyResults(((DataStoreBase<String,WebPage>)dataStore).newQuery());
   }
 
   public static void testDeleteSchema(DataStore<String, WebPage> dataStore)
@@ -157,7 +158,7 @@ public class DataStoreTestUtil {
     dataStore.deleteSchema();
     dataStore.createSchema();
 
-    assertEmptyResults(dataStore.newQuery());
+    assertEmptyResults(((DataStoreBase<String,WebPage>)dataStore).newQuery());
   }
 
   public static<K, T extends Persistent> void testSchemaExists(
@@ -822,7 +823,7 @@ public class DataStoreTestUtil {
     createWebPageData(store);
 
     for(int i=0; i<URLS.length; i++) {
-      Query<String, WebPage> query = store.newQuery();
+      Query<String, WebPage> query = ((DataStoreBase<String,WebPage>)store).newQuery();
       query.setFields(fields);
       query.setKey(URLS[i]);
       Result<String, WebPage> result = query.execute();
@@ -856,7 +857,7 @@ public class DataStoreTestUtil {
     //try all ranges
     for(int i=0; i<sortedUrls.size(); i++) {
       for(int j=i; j<sortedUrls.size(); j++) {
-        Query<String, WebPage> query = store.newQuery();
+        Query<String, WebPage> query = ((DataStoreBase<String,WebPage>)store).newQuery();
         if(setStartKeys)
           query.setStartKey(sortedUrls.get(i));
         if(setEndKeys)
@@ -906,13 +907,13 @@ public class DataStoreTestUtil {
     createWebPageData(store);
 
     //query empty results
-    Query<String, WebPage> query = store.newQuery();
+    Query<String, WebPage> query = ((DataStoreBase<String,WebPage>)store).newQuery();
     query.setStartKey("aa");
     query.setEndKey("ab");
     assertEmptyResults(query);
 
     //query empty results for one key
-    query = store.newQuery();
+    query = ((DataStoreBase<String,WebPage>)store).newQuery();
     query.setKey("aa");
     assertEmptyResults(query);
   }
@@ -936,7 +937,7 @@ public class DataStoreTestUtil {
   public static void testGetPartitions(DataStore<String, WebPage> store)
   throws Exception {
     createWebPageData(store);
-    testGetPartitions(store, store.newQuery());
+    testGetPartitions(store, ((DataStoreBase<String,WebPage>)store).newQuery());
   }
 
   public static void testGetPartitions(DataStore<String, WebPage> store
@@ -962,7 +963,7 @@ public class DataStoreTestUtil {
     Map<String, Integer> partitionResults = new HashMap<>();
 
     //execute query and count results
-    Result<String, WebPage> result = store.execute(query);
+    Result<String, WebPage> result = query.execute();
     assertNotNull(result);
 
     while(result.next()) {
@@ -979,7 +980,7 @@ public class DataStoreTestUtil {
     for(PartitionQuery<String, WebPage> partition:partitions) {
       assertNotNull(partition);
 
-      result = store.execute(partition);
+      result = partition.execute();
       assertNotNull(result);
 
       while(result.next()) {
@@ -1016,7 +1017,7 @@ public class DataStoreTestUtil {
       assertNull(store.get(url));
 
       //assert that other records are not deleted
-      assertNumResults(store.newQuery(), URLS.length - ++deletedSoFar);
+      assertNumResults(((DataStoreBase<String,WebPage>)store).newQuery(), URLS.length - ++deletedSoFar);
     }
   }
 
@@ -1142,7 +1143,7 @@ public class DataStoreTestUtil {
     //try all ranges
     for (int i = 0; i < sortedUrls.size(); i++) {
       for (int j = i; j < sortedUrls.size(); j++) {
-        Query<String, WebPage> query = store.newQuery();
+        Query<String, WebPage> query = ((DataStoreBase<String,WebPage>)store).newQuery();
         if (setStartKeys) {
           query.setStartKey(sortedUrls.get(i));
         }

@@ -179,31 +179,17 @@ extends DataStoreBase<K, T> implements FileBackedDataStore<K, T> {
   }
 
   @Override
-  public Result<K, T> execute(Query<K, T> query) throws GoraException {
-    Result<K, T> results = null;
-    try{
-      if(query instanceof FileSplitPartitionQuery) {
-        results = executePartial((FileSplitPartitionQuery<K, T>) query);
-      } else {
-        results = executeQuery(query);
-      }
-    } catch (GoraException e) {
-      throw e;
-    } catch (Exception e) {
-      throw new GoraException(e);
+  public Result<K, T> executeQuery(Query<K, T> query) throws IOException {
+    if(query instanceof FileSplitPartitionQuery) {
+      return executePartial((FileSplitPartitionQuery<K, T>) query);
     }
-    return results;
+    return executeQueryInternal(query);
   }
 
   /**
-   * Executes a normal Query reading the whole data. #execute() calls this function
-   * for non-PartitionQuery's.
-   *
-   * @param query the {@link Query} to execute
-   * @return a {@link Result}
-   * @throws IOException if there is an error during query exeuction
+   * Executes a normal Query reading the whole data.
    */
-  protected abstract Result<K,T> executeQuery(Query<K,T> query)
+  protected abstract Result<K,T> executeQueryInternal(Query<K,T> query)
           throws IOException;
 
   /**

@@ -23,8 +23,8 @@ import java.io.IOException;
 import ai.platon.gora.mapreduce.GoraMapper;
 import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.query.Query;
-import ai.platon.gora.store.DataStore;
-import ai.platon.gora.store.DataStoreFactory;
+import ai.platon.gora.store.DataStore;import ai.platon.gora.store.DataStoreFactory;
+import ai.platon.gora.store.impl.DataStoreBase;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.io.NullWritable;
@@ -62,15 +62,6 @@ public class QueryCounter<K, T extends Persistent> extends Configured implements
     }
   }
 
-  /** Returns the Query to count the results of. Subclasses can
-   * override this function to customize the query.
-   * @return the Query object to count the results of.
-   */
-  public Query<K, T> getQuery(DataStore<K,T> dataStore) {
-    Query<K,T> query = dataStore.newQuery();
-    return query;
-  }
-
   /**
    * Creates and returns the {@link Job} for submitting to Hadoop mapreduce.
    * @param query
@@ -103,20 +94,6 @@ public class QueryCounter<K, T extends Persistent> extends Configured implements
     return job.getCounters().findCounter(COUNTER_GROUP, ROWS).getValue();
   }
 
-  /**
-   * Returns the number of results to the Query obtained by the
-   * {@link #getQuery(DataStore)} method.
-   */
-  public long countQuery(DataStore<K,T> dataStore) throws Exception {
-    Query<K,T> query = getQuery(dataStore);
-
-    Job job = createJob(query);
-    job.waitForCompletion(true);
-    assert(job.isComplete());
-
-    return job.getCounters().findCounter(COUNTER_GROUP, ROWS).getValue();
-  }
-
   @SuppressWarnings("unchecked")
   @Override
   public int run(String[] args) throws Exception {
@@ -140,10 +117,6 @@ public class QueryCounter<K, T extends Persistent> extends Configured implements
     else {
       dataStore = DataStoreFactory.getDataStore(keyClass, persistentClass, conf);
     }
-
-    long results = countQuery(dataStore);
-
-    LOG.info("Number of result to the query:" + results);
 
     return 0;
   }
