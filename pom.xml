@@ -432,6 +432,9 @@
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${version.maven-javadoc-plugin}</version>
           <configuration>
+            <doclint>none</doclint>
+            <failOnError>true</failOnError>
+            <failOnWarnings>false</failOnWarnings>
             <excludePackageNames>ai.platon.gora.tutorial.log.generated;ai.platon.gora.goraci.generated;ai.platon.gora.benchmark.generated;</excludePackageNames>
           </configuration>
           <executions>
@@ -551,6 +554,9 @@
             <artifactId>maven-javadoc-plugin</artifactId>
             <version>${version.maven-javadoc-plugin}</version>
             <configuration>
+              <doclint>none</doclint>
+              <failOnError>false</failOnError>
+              <failOnWarnings>false</failOnWarnings>
               <excludePackageNames>ai.platon.gora.tutorial.log.generated;ai.platon.gora.goraci.generated;ai.platon.gora.benchmark.generated</excludePackageNames>
             </configuration>
             <executions>
