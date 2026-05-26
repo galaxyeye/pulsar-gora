@@ -76,10 +76,23 @@
             <artifactId>avro-mapred</artifactId>
         </dependency>
 
-        <!-- Spark dependency -->
         <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.13</artifactId>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop-3.version}</version>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                    <groupId>*</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-mapreduce-client-core</artifactId>
+            <version>${hadoop-3.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Flink dependencies -->
@@ -146,6 +159,7 @@
         <dependency>
             <groupId>com.sparkutils</groupId>
             <artifactId>hadoop-bare-naked-local-fs</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

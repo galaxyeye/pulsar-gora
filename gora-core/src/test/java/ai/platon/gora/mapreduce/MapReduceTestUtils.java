@@ -33,7 +33,6 @@ import ai.platon.gora.examples.generated.WebPage;
 import ai.platon.gora.examples.mapreduce.MapReduceSerialization;
 import ai.platon.gora.examples.mapreduce.QueryCounter;
 import ai.platon.gora.examples.mapreduce.WordCount;
-import ai.platon.gora.examples.spark.SparkWordCount;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
 import ai.platon.gora.store.DataStore;
@@ -111,36 +110,6 @@ public class MapReduceTestUtils {
     }
   }
 
-  public static void testSparkWordCount(Configuration conf, DataStore<String,WebPage> inStore, DataStore<String,
-      TokenDatum> outStore) throws Exception {
-    //Datastore now has to be a Hadoop based datastore
-    ((DataStoreBase<String,WebPage>)inStore).setConf(conf);
-    ((DataStoreBase<String,TokenDatum>)outStore).setConf(conf);
-
-    //create input
-    WebPageDataCreator.createWebPageData(inStore);
-
-    //run Spark
-    SparkWordCount wordCount = new SparkWordCount();
-    wordCount.wordCount(inStore, outStore);
-    
-    //assert results
-    HashMap<String, Integer> actualCounts = new HashMap<>();
-    for(String content : WebPageDataCreator.CONTENTS) {
-      if (content != null) {
-        for(String token:content.split(" ")) {
-          Integer count = actualCounts.get(token);
-          if(count == null)
-            count = 0;
-          actualCounts.put(token, ++count);
-        }
-      }
-    }
-    for(Map.Entry<String, Integer> entry:actualCounts.entrySet()) {
-      assertTokenCount(outStore, entry.getKey(), entry.getValue());
-    }
-  }
-  
   private static void assertTokenCount(DataStore<String, TokenDatum> outStore,
       String token, int count) throws Exception {
     TokenDatum datum = outStore.get(token, null);
