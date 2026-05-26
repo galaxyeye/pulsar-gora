@@ -29,7 +29,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.bson.Document;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.testcontainers.mongodb.MongoDBContainer;
 
@@ -42,7 +41,6 @@ public class TestMongoStoreMetadataAnalyzer extends TestMongoStore {
     private DataStoreMetadataAnalyzer storeMetadataAnalyzer;
     private MongoDatabase mongoDatabase;
 
-    @ClassRule
     public final static MongoDBContainer container = new MongoDBContainer("mongo:4.2");
 
     static {

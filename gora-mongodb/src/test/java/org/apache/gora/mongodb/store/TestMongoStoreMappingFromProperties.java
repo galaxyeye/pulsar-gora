@@ -23,7 +23,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.gora.examples.generated.Employee;
 import org.apache.gora.store.DataStoreFactory;
 import org.apache.hadoop.conf.Configuration;
-import org.junit.ClassRule;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.testcontainers.mongodb.MongoDBContainer;
 
@@ -36,8 +37,19 @@ import java.util.Properties;
  */
 public class TestMongoStoreMappingFromProperties {
 
-    @ClassRule
     public final static MongoDBContainer _container = new MongoDBContainer("mongo:4.2");
+
+    @BeforeClass
+    public static void setUpClass() {
+        _container.start();
+    }
+
+    @AfterClass
+    public static void tearDownClass() {
+        if (_container.isRunning()) {
+            _container.stop();
+        }
+    }
 
     @Test
     public void testInitialize() throws IOException {

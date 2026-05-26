@@ -21,7 +21,6 @@ import org.apache.gora.GoraTestDriver;
 import org.apache.gora.mongodb.GoraMongodbTestDriver;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.testcontainers.mongodb.MongoDBContainer;
 
 /**
@@ -29,7 +28,6 @@ import org.testcontainers.mongodb.MongoDBContainer;
  */
 public class GoraMongoMapredTest {
 
-    @ClassRule
     public final static MongoDBContainer container = new MongoDBContainer("mongo:3.6");
 
     protected static GoraTestDriver testDriver = new GoraMongodbTestDriver(container);

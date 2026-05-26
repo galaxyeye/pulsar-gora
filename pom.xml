@@ -598,47 +598,6 @@
     <module>gora-mongodb</module>
   </modules>
 
-  <properties>
-    <!-- Dependencies -->
-
-    <!-- Only for common dependency management -->
-    <spring-boot.version>4.0.1</spring-boot.version>
-
-    <!-- Avro Dependencies -->
-    <avro.version>1.8.2</avro.version>
-    <!-- Generated classes should be re-generated when avro updates -->
-<!--    <avro.version>1.12.1</avro.version>-->
-    <!--     <jackson.version>1.6.9</jackson.version> -->
-    <!-- Hadoop Dependencies -->
-
-    <hadoop-3.version>3.4.2</hadoop-3.version>
-    <hadoop-3.test.version>3.4.2</hadoop-3.test.version>
-
-    <!-- <flink.version>1.16.3</flink.version>-->
-    <flink.version>2.2.0</flink.version>
-    <spark.version>4.1.1</spark.version>
-
-    <!-- Misc Dependencies -->
-    <guava.version>33.5.0-jre</guava.version>
-    <commons-lang.version>2.6</commons-lang.version>
-    <jdom.version>1.1.3</jdom.version>
-
-    <!-- MongoDB Dependencies -->
-    <mongo.driver.version>3.12.10</mongo.driver.version>
-
-    <!-- Maven Plugin Dependencies -->
-    <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
-
-    <!-- General Properties -->
-    <javaVersion>17</javaVersion>
-    <maven.compiler.release>${javaVersion}</maven.compiler.release>
-
-    <!-- Suppress warning: [WARNING] Using platform encoding (GBK actually) to copy filtered resources -->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-  </properties>
-
   <dependencyManagement>
     <dependencies>
       <!-- Internal Dependencies -->
@@ -685,12 +644,12 @@
 
 
 
-      <dependency>
-        <groupId>org.apache.hadoop</groupId>
-        <artifactId>hadoop-client</artifactId>
-        <optional>true</optional>
-        <version>${hadoop-3.version}</version>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.apache.hadoop</groupId>-->
+<!--        <artifactId>hadoop-client</artifactId>-->
+<!--        <optional>true</optional>-->
+<!--        <version>${hadoop-3.version}</version>-->
+<!--      </dependency>-->
 
       <dependency>
         <groupId>org.apache.avro</groupId>
@@ -784,5 +743,45 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <properties>
+    <!-- Dependencies -->
+
+    <!-- Only for common dependency management -->
+    <spring-boot.version>4.0.1</spring-boot.version>
+
+    <!-- Avro Dependencies -->
+    <avro.version>1.8.2</avro.version>
+    <!-- Generated classes should be re-generated when avro updates -->
+    <!--    <avro.version>1.12.1</avro.version>-->
+    <!--     <jackson.version>1.6.9</jackson.version> -->
+    <!-- Hadoop Dependencies -->
+
+    <hadoop-3.version>3.4.2</hadoop-3.version>
+    <hadoop-3.test.version>3.4.2</hadoop-3.test.version>
+
+    <flink.version>2.2.1</flink.version>
+    <spark.version>4.1.2</spark.version>
+
+    <!-- Misc Dependencies -->
+    <guava.version>33.5.0-jre</guava.version>
+    <commons-lang.version>2.6</commons-lang.version>
+    <jdom.version>1.1.3</jdom.version>
+
+    <!-- MongoDB Dependencies -->
+    <mongo.driver.version>3.12.10</mongo.driver.version>
+
+    <!-- Maven Plugin Dependencies -->
+    <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
+
+    <!-- General Properties -->
+    <javaVersion>17</javaVersion>
+    <maven.compiler.release>${javaVersion}</maven.compiler.release>
+
+    <!-- Suppress warning: [WARNING] Using platform encoding (GBK actually) to copy filtered resources -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+  </properties>
 
 </project>
