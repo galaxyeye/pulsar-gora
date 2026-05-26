@@ -27,7 +27,7 @@ public class MockPersistent extends PersistentBase {
 
   private static final long serialVersionUID = -7468893532296148608L;
   public static final org.apache.avro.Schema SCHEMA$ =
-          new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MockPersistent\",\"namespace\":\"org.apache.gora.mock.persistency\",\"fields\":[{\"name\":\"foo\",\"type\":\"int\"},{\"name\":\"baz\",\"type\":\"int\"}]}");
+          new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"MockPersistent\",\"namespace\":\"ai.platon.gora.mock.persistency\",\"fields\":[{\"name\":\"foo\",\"type\":\"int\"},{\"name\":\"baz\",\"type\":\"int\"}]}");
   public static final String FOO = "foo";
   public static final String BAZ = "baz";
   
@@ -67,7 +67,7 @@ public class MockPersistent extends PersistentBase {
   @Override
   public Schema getSchema() {
     Schema.Parser parser = new Schema.Parser();
-    return parser.parse("{\"type\":\"record\",\"name\":\"MockPersistent\",\"namespace\":\"org.apache.gora.mock.persistency\",\"fields\":[{\"name\":\"foo\",\"type\":\"int\"},{\"name\":\"baz\",\"type\":\"int\"}]}");
+    return parser.parse("{\"type\":\"record\",\"name\":\"MockPersistent\",\"namespace\":\"ai.platon.gora.mock.persistency\",\"fields\":[{\"name\":\"foo\",\"type\":\"int\"},{\"name\":\"baz\",\"type\":\"int\"}]}");
   }
   
   public void setFoo(int foo) {

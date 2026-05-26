@@ -42,7 +42,7 @@
         <field name="metadata" docfield="metadata" type="document"/>
     </class>
 
-    <class document="hosts" keyClass="java.lang.String" name="org.apache.gora.mongodb.beans.tests.Host">
+    <class document="hosts" keyClass="java.lang.String" name="ai.platon.gora.mongodb.beans.tests.Host">
         <field name="metadata" docfield="metadata" type="document"/>
         <field name="outlinks" docfield="links.out" type="document"/>
         <field name="inlinks" docfield="links.in" type="document"/>

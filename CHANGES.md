@@ -11,7 +11,7 @@
      [GORA-373] - Failing TestQueryBase with JDK8
      [GORA-421] - PersistentBase#setDirty() does not set dirty
      [GORA-476] - Nutch 2.X GeneratorJob creates NullPointerException when using DataFileAvroStore
-     [GORA-500] - Bug in org.apache.gora.solr.store.SolrStore#getDatumWriter & #getDatumReader
+     [GORA-500] - Bug in ai.platon.gora.solr.store.SolrStore#getDatumWriter & #getDatumReader
      [GORA-503] - Field index 0 is always considered as clean even if it is dirty
      [GORA-508] - Website title cut off issue
      [GORA-526] - Potential null dereference in AvroSerializer#analyzePersistent
@@ -85,7 +85,7 @@ Bug
 
 Improvement
 
-    [GORA-107] - Fully annotate Javadoc's for methods in org.apache.gora.cassandra.store.*
+    [GORA-107] - Fully annotate Javadoc's for methods in ai.platon.gora.cassandra.store.*
     [GORA-205] - Dedup CassandraMapping and CassandraMappingManager
     [GORA-214] - use batched Mutations available in Hector Mutator
     [GORA-215] - expose Hector's CassandraHostConfigurator possibilities
@@ -147,7 +147,7 @@ Bug
     [GORA-462] - Potential null dereference of serializer in CassandraSubColumn#getFieldValue()
     [GORA-463] - Missing assignment in CassandraSubColumn#getUnionSchema()
     [GORA-467] - Flushing DataOutputStream before calling toByteArray on the underlying ByteArrayOutputStream
-    [GORA-474] - bug in org.apache.gora.solr.store.SolrStore#getDatumWriter & #getDatumReader
+    [GORA-474] - bug in ai.platon.gora.solr.store.SolrStore#getDatumWriter & #getDatumReader
     [GORA-478] - Address Sonar issues within gora-accumulo Encoder classes
     [GORA-479] - Various compilation errors in gora-infinispan module
     [GORA-480] - Compilation issues with gora-dynamodb
@@ -483,7 +483,7 @@ Release Report: https://issues.apache.org/jira/secure/ReleaseNote.jspa?projectId
 
 * GORA-150 Introduce Configuration property preferred.schema.name (ferdy)
 
-* GORA-142 Creates org.apache.gora.cassandra.serializers package in order to clean the code of store and query packages and to support additional types in future. (kazk)
+* GORA-142 Creates ai.platon.gora.cassandra.serializers package in order to clean the code of store and query packages and to support additional types in future. (kazk)
 
 * GORA-148 CassandraMapping supports only (first) keyspace and class in gora-cassandra-mapping.xml (kazk)
 

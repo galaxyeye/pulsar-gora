@@ -135,11 +135,11 @@ public class GoraCompiler extends SpecificCompiler {
     public static String generateAppropriateWrapperOrValue(Schema schema) {
         switch (schema.getType()) {
             case MAP:
-                return "(value instanceof org.apache.gora.persistency.Dirtyable) ? "
-                        + "value : new org.apache.gora.persistency.impl.DirtyMapWrapper(value)";
+                return "(value instanceof ai.platon.gora.persistency.Dirtyable) ? "
+                        + "value : new ai.platon.gora.persistency.impl.DirtyMapWrapper(value)";
             case ARRAY:
-                return "(value instanceof org.apache.gora.persistency.Dirtyable) ? "
-                        + "value : new org.apache.gora.persistency.impl.DirtyListWrapper(value)";
+                return "(value instanceof ai.platon.gora.persistency.Dirtyable) ? "
+                        + "value : new ai.platon.gora.persistency.impl.DirtyListWrapper(value)";
             case BYTES:
                 return "deepCopyToReadOnlyBuffer(value)";
             default:
@@ -156,11 +156,11 @@ public class GoraCompiler extends SpecificCompiler {
     public static String generateAppropriateWrapperOrValueForPut(Schema schema) {
         switch (schema.getType()) {
             case MAP:
-                return "(value instanceof org.apache.gora.persistency.Dirtyable) ? "
-                        + "value : new org.apache.gora.persistency.impl.DirtyMapWrapper((java.util.Map)value)";
+                return "(value instanceof ai.platon.gora.persistency.Dirtyable) ? "
+                        + "value : new ai.platon.gora.persistency.impl.DirtyMapWrapper((java.util.Map)value)";
             case ARRAY:
-                return "(value instanceof org.apache.gora.persistency.Dirtyable) ? "
-                        + "value : new org.apache.gora.persistency.impl.DirtyListWrapper((java.util.List)value)";
+                return "(value instanceof ai.platon.gora.persistency.Dirtyable) ? "
+                        + "value : new ai.platon.gora.persistency.impl.DirtyListWrapper((java.util.List)value)";
             default:
                 return "value";
         }
@@ -182,9 +182,9 @@ public class GoraCompiler extends SpecificCompiler {
                 case RECORD:
                     return field.schema().getName() + ".newBuilder().build()";
                 case MAP:
-                    return "new org.apache.gora.persistency.impl.DirtyMapWrapper((java.util.Map)defaultValue(fields()[" + field.pos() + "]))";
+                    return "new ai.platon.gora.persistency.impl.DirtyMapWrapper((java.util.Map)defaultValue(fields()[" + field.pos() + "]))";
                 case ARRAY:
-                    return "new org.apache.gora.persistency.impl.DirtyListWrapper((java.util.List)defaultValue(fields()[" + field.pos() + "]))";
+                    return "new ai.platon.gora.persistency.impl.DirtyListWrapper((java.util.List)defaultValue(fields()[" + field.pos() + "]))";
                 default:
                     return "defaultValue(fields()[" + field.pos() + "])";
             }
@@ -203,9 +203,9 @@ public class GoraCompiler extends SpecificCompiler {
             case RECORD:
                 return field.schema().getName() + ".newBuilder().build()";
             case MAP:
-                return "new org.apache.gora.persistency.impl.DirtyMapWrapper(new java.util.HashMap())";
+                return "new ai.platon.gora.persistency.impl.DirtyMapWrapper(new java.util.HashMap())";
             case ARRAY:
-                return "new org.apache.gora.persistency.impl.DirtyListWrapper(new java.util.ArrayList())";
+                return "new ai.platon.gora.persistency.impl.DirtyListWrapper(new java.util.ArrayList())";
             default:
                 return "this." + field.name();
         }

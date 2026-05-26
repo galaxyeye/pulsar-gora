@@ -1,7 +1,7 @@
   {
     "type": "record",
     "name": "Employee","default":null,
-    "namespace": "org.apache.gora.examples.generated",
+    "namespace": "ai.platon.gora.examples.generated",
     "fields" : [
       {"name": "name", "type": ["null","string"],"default":null},
       {"name": "dateOfBirth", "type": "long","default":0},
@@ -13,7 +13,7 @@
         {
           "type": "record",
           "name": "WebPage",
-          "namespace": "org.apache.gora.examples.generated",
+          "namespace": "ai.platon.gora.examples.generated",
           "fields" : [
             {"name": "url", "type": ["null","string"], "default":null},
             {"name": "content", "type": ["null","bytes"],"default":null},
@@ -23,7 +23,7 @@
             {"name": "metadata", "default":null, "type": {
               "name": "Metadata",
               "type": "record",
-              "namespace": "org.apache.gora.examples.generated",
+              "namespace": "ai.platon.gora.examples.generated",
               "fields": [
                {"name": "version", "type": "int","default":0},
                {"name": "data", "type": {"type": "map", "values": "string"},"default":{}}

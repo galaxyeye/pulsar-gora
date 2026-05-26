@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.apache.gora</groupId>
+    <groupId>ai.platon.gora</groupId>
     <artifactId>gora</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
@@ -35,7 +35,7 @@
   <dependencies>
     <!-- Gora Internal Dependencies -->
     <dependency>
-      <groupId>org.apache.gora</groupId>
+      <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core</artifactId>
     </dependency>
 
@@ -87,7 +87,7 @@
     <!-- END of Logging Dependencies -->
 
     <dependency>
-      <groupId>org.apache.gora</groupId>
+      <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core</artifactId>
       <type>test-jar</type>
       <scope>test</scope>

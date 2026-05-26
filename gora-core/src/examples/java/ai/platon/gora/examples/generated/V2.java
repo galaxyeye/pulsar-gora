@@ -9,7 +9,7 @@ import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.persistency.impl.PersistentBase;
 
 public class V2 extends PersistentBase implements org.apache.avro.specific.SpecificRecord, Persistent {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"V2\",\"namespace\":\"org.apache.gora.examples.generated\",\"fields\":[{\"name\":\"v3\",\"type\":\"int\",\"default\":0}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"V2\",\"namespace\":\"ai.platon.gora.examples.generated\",\"fields\":[{\"name\":\"v3\",\"type\":\"int\",\"default\":0}]}");
   private static final long serialVersionUID = -6538763924317658547L;
   /** Enum containing all data bean's fields. */
   public static enum Field {

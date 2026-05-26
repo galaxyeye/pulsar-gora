@@ -145,7 +145,7 @@ public class WebPageDataCreator {
   }
   
   public int run(String[] args) throws Exception {
-    String dataStoreClass = "org.apache.gora.hbase.store.HBaseStore";
+    String dataStoreClass = "ai.platon.gora.hbase.store.HBaseStore";
     if(args.length > 0) {
       dataStoreClass = args[0];
     }

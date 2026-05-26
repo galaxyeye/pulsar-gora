@@ -9,7 +9,7 @@
 [![build](https://github.com/apache/gora/workflows/build/badge.svg?branch=master)](https://github.com/apache/gora/actions?query=workflow%3Abuild)
 [![Jenkins](https://ci-builds.apache.org/buildStatus/icon?job=Gora%2Fgora-pipeline%2Fmaster)](https://ci-builds.apache.org/job/Gora/job/gora-pipeline/job/master/)
 [![license](https://img.shields.io/github/license/apache/gora.svg?maxAge=2592000?style=plastic)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Maven Central](https://img.shields.io/maven-central/v/org.apache.gora/gora.svg?maxAge=2592000?style=plastic)](http://search.maven.org/#search|ga|1|g%3A%22org.apache.gora%22)
+[![Maven Central](https://img.shields.io/maven-central/v/ai.platon.gora/gora.svg?maxAge=2592000?style=plastic)](http://search.maven.org/#search|ga|1|g%3A%22ai.platon.gora%22)
 [![Twitter URL](https://img.shields.io/twitter/url/http/apachegora.svg?style=social&maxAge=2592000?style=plastic)](https://twitter.com/apachegora)
  
 The Apache Gora open source framework provides an in-memory data model 

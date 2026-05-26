@@ -11,7 +11,7 @@ import ai.platon.gora.persistency.impl.DirtyMapWrapper;
 import ai.platon.gora.persistency.impl.PersistentBase;
 
 public class Metadata extends PersistentBase implements org.apache.avro.specific.SpecificRecord, Persistent {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Metadata\",\"namespace\":\"org.apache.gora.examples.generated\",\"fields\":[{\"name\":\"version\",\"type\":\"int\",\"default\":0},{\"name\":\"data\",\"type\":{\"type\":\"map\",\"values\":\"string\"},\"default\":{}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Metadata\",\"namespace\":\"ai.platon.gora.examples.generated\",\"fields\":[{\"name\":\"version\",\"type\":\"int\",\"default\":0},{\"name\":\"data\",\"type\":{\"type\":\"map\",\"values\":\"string\"},\"default\":{}}]}");
   private static final long serialVersionUID = -7097391446015721734L;
   /** Enum containing all data bean's fields. */
   public static enum Field {

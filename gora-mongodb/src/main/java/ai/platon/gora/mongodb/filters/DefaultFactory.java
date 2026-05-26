@@ -20,7 +20,7 @@ package ai.platon.gora.mongodb.filters;
 import ai.platon.gora.filter.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.gora.filter.*;
+import ai.platon.gora.filter.*;
 import ai.platon.gora.mongodb.store.MongoMapping;
 import ai.platon.gora.mongodb.store.MongoStore;
 import ai.platon.gora.persistency.impl.PersistentBase;

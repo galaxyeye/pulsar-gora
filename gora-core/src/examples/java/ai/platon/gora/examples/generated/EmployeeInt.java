@@ -21,7 +21,7 @@ import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.persistency.impl.PersistentBase;
 
 public class EmployeeInt extends PersistentBase implements org.apache.avro.specific.SpecificRecord, Persistent {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EmployeeInt\",\"namespace\":\"org.apache.gora.examples.generated\",\"fields\":[{\"name\":\"ssn\",\"type\":\"int\",\"default\":0}],\"default\":null}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"EmployeeInt\",\"namespace\":\"ai.platon.gora.examples.generated\",\"fields\":[{\"name\":\"ssn\",\"type\":\"int\",\"default\":0}],\"default\":null}");
   private static final long serialVersionUID = 1627924353131816005L;
   /** Enum containing all data bean's fields. */
   public static enum Field {

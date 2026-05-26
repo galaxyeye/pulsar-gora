@@ -259,7 +259,7 @@ public abstract class DataStoreTestBase {
   @Test
   /**
    * Tests put and get of an {@link Employee}
-   * record with a nested {@link org.apache.gora.examples.generated.WegPage} record (not recursive)
+   * record with a nested {@link ai.platon.gora.examples.generated.WegPage} record (not recursive)
    * the webpage of an Employee.
    * @throws IOException
    * @throws Exception

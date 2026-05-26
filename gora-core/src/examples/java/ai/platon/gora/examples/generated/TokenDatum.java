@@ -21,7 +21,7 @@ import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.persistency.impl.PersistentBase;
 
 public class TokenDatum extends PersistentBase implements org.apache.avro.specific.SpecificRecord, Persistent {
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenDatum\",\"namespace\":\"org.apache.gora.examples.generated\",\"fields\":[{\"name\":\"count\",\"type\":\"int\",\"default\":0}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TokenDatum\",\"namespace\":\"ai.platon.gora.examples.generated\",\"fields\":[{\"name\":\"count\",\"type\":\"int\",\"default\":0}]}");
   private static final long serialVersionUID = -4481652577902636424L;
   /** Enum containing all data bean's fields. */
   public static enum Field {
