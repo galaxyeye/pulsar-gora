@@ -57,13 +57,6 @@
       <artifactId>avro</artifactId>
     </dependency>
 
-    <!-- Misc Dependencies -->
-<!--     <dependency>-->
-<!--      <groupId>org.apache.hadoop</groupId>-->
-<!--      <artifactId>hadoop-client</artifactId>-->
-<!--      <optional>true</optional>-->
-<!--    </dependency>-->
-
     <dependency>
       <groupId>org.jdom</groupId>
       <artifactId>jdom</artifactId>
@@ -130,6 +123,10 @@
       <artifactId>commons-io</artifactId>
       <version>2.21.0</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
     </dependency>
     <!-- END of Testing Dependencies -->
   </dependencies>
