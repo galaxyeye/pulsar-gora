@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache</groupId>
     <artifactId>apache</artifactId>
-    <version>36</version>
+    <version>38</version>
   </parent>
 
   <groupId>ai.platon.gora</groupId>
@@ -319,7 +319,7 @@
   <scm>
     <connection>scm:git:https://github.com/galaxyeye/pulsar-gora.git</connection>
     <developerConnection>scm:git:https://github.com/galaxyeye/pulsar-gora.git</developerConnection>
-    <url>https://github.com/galaxyeye/pulsar-gora.git</url>
+    <url>https://github.com/galaxyeye/pulsar-gora</url>
     <tag>HEAD</tag>
   </scm>
 
