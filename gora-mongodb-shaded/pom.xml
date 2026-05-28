@@ -62,6 +62,14 @@
           <groupId>org.apache.flink</groupId>
           <artifactId>flink-avro</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.apache.avro</groupId>
+          <artifactId>avro-mapred</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-core</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
   </dependencies>
@@ -82,13 +90,43 @@
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <shadedArtifactAttached>false</shadedArtifactAttached>
-              <minimizeJar>true</minimizeJar>
+<!--              <minimizeJar>true</minimizeJar>-->
               <filters>
                 <filter>
                   <artifact>ai.platon.gora:gora-core</artifact>
                   <excludes>
+                    <exclude>ai/platon/gora/avro/query/**</exclude>
+                    <exclude>ai/platon/gora/avro/store/**</exclude>
                     <exclude>ai/platon/gora/spark/**</exclude>
                     <exclude>ai/platon/gora/flink/**</exclude>
+                    <exclude>ai/platon/gora/mapreduce/**</exclude>
+                    <exclude>ai/platon/gora/memory/**</exclude>
+                    <exclude>ai/platon/gora/persistency/ws/**</exclude>
+                    <exclude>ai/platon/gora/query/ws/**</exclude>
+                    <exclude>ai/platon/gora/store/ws/**</exclude>
+                    <exclude>ai/platon/gora/query/impl/FileSplitPartitionQuery.class</exclude>
+                    <exclude>ai/platon/gora/store/FileBackedDataStore.class</exclude>
+                    <exclude>ai/platon/gora/store/WebServiceBackedDataStore.class</exclude>
+                    <exclude>ai/platon/gora/store/impl/FileBackedDataStoreBase.class</exclude>
+                  </excludes>
+                </filter>
+                <filter>
+                  <artifact>org.apache.hadoop:hadoop-common</artifact>
+                  <excludes>
+                    <exclude>org/apache/hadoop/security/**</exclude>
+                    <exclude>org/apache/hadoop/ipc/**</exclude>
+                    <exclude>org/apache/hadoop/ha/**</exclude>
+                    <exclude>org/apache/hadoop/metrics2/**</exclude>
+                    <exclude>org/apache/hadoop/crypto/**</exclude>
+                    <exclude>org/apache/hadoop/tracing/**</exclude>
+                    <exclude>org/apache/hadoop/net/**</exclude>
+                    <exclude>org/apache/hadoop/http/**</exclude>
+                    <exclude>org/apache/hadoop/tools/**</exclude>
+                    <exclude>org/apache/hadoop/oncrpc/**</exclude>
+                    <exclude>org/apache/hadoop/service/**</exclude>
+                    <exclude>org/apache/hadoop/log/**</exclude>
+                    <exclude>org/apache/hadoop/portmap/**</exclude>
+                    <exclude>org/apache/hadoop/jmx/**</exclude>
                   </excludes>
                 </filter>
                 <filter>
