@@ -32,7 +32,6 @@ import org.apache.avro.Schema.Field;
 import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import ai.platon.gora.avro.store.AvroStore;
 import ai.platon.gora.persistency.BeanFactory;
 import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.persistency.impl.BeanFactoryImpl;
@@ -80,7 +79,7 @@ public abstract class DataStoreBase<K, T extends PersistentBase>
 
   protected SpecificDatumWriter<T> datumWriter;
 
-  public static final Logger LOG = LoggerFactory.getLogger(AvroStore.class);
+  public static final Logger LOG = LoggerFactory.getLogger(DataStoreBase.class);
 
   public DataStoreBase() {
   }

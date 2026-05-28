@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import ai.platon.gora.avro.store.AvroStore;
 import ai.platon.gora.mapreduce.GoraMapReduceUtils;
 import ai.platon.gora.persistency.impl.PersistentBase;
 import ai.platon.gora.query.PartitionQuery;
@@ -60,7 +59,7 @@ extends DataStoreBase<K, T> implements FileBackedDataStore<K, T> {
   protected InputStream inputStream;
   protected OutputStream outputStream;
 
-  public static final Logger LOG = LoggerFactory.getLogger(AvroStore.class);
+  public static final Logger LOG = LoggerFactory.getLogger(FileBackedDataStoreBase.class);
 
   @Override
   public void initialize(Class<K> keyClass, Class<T> persistentClass,
