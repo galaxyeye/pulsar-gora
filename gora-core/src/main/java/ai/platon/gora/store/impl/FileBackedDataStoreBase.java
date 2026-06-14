@@ -23,25 +23,21 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import ai.platon.gora.mapreduce.GoraMapReduceUtils;
 import ai.platon.gora.persistency.impl.PersistentBase;
 import ai.platon.gora.query.PartitionQuery;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
-import ai.platon.gora.query.impl.FileSplitPartitionQuery;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.store.FileBackedDataStore;
 import ai.platon.gora.util.GoraException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.InputSplit;
-import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -166,40 +162,13 @@ extends DataStoreBase<K, T> implements FileBackedDataStore<K, T> {
 
   @Override
   public List<PartitionQuery<K, T>> getPartitions(Query<K, T> query) throws IOException {
-    List<InputSplit> splits = null;
-    List<PartitionQuery<K, T>> queries = null;
-    splits = GoraMapReduceUtils.getSplits(getConf(), inputPath);
-    queries = new ArrayList<>(splits.size());
-
-    for(InputSplit split : splits) {
-      queries.add(new FileSplitPartitionQuery<>(query, (FileSplit) split));
-    }
-    return queries;
+    throw new NotImplementedException("Partitioning is not implemented for FileBackedDataStoreBase");
   }
 
   @Override
   public Result<K, T> executeQuery(Query<K, T> query) throws IOException {
-    if(query instanceof FileSplitPartitionQuery) {
-      return executePartial((FileSplitPartitionQuery<K, T>) query);
-    }
-    return executeQueryInternal(query);
+    throw new NotImplementedException("executeQuery is not implemented for FileBackedDataStoreBase");
   }
-
-  /**
-   * Executes a normal Query reading the whole data.
-   */
-  protected abstract Result<K,T> executeQueryInternal(Query<K,T> query)
-          throws IOException;
-
-  /**
-   * Executes a PartitialQuery, reading the data between start and end.
-   *
-   * @param query the {@link FileSplitPartitionQuery} to execute
-   * @return a {@link Result}
-   * @throws IOException if there is an error during query exeuction
-   */
-  protected abstract Result<K,T> executePartial(FileSplitPartitionQuery<K,T> query)
-          throws IOException;
 
   @Override
   public void flush() throws GoraException {

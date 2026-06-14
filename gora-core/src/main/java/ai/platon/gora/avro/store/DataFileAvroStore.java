@@ -27,7 +27,6 @@ import ai.platon.gora.avro.query.DataFileAvroResult;
 import ai.platon.gora.persistency.impl.PersistentBase;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
-import ai.platon.gora.query.impl.FileSplitPartitionQuery;
 import ai.platon.gora.util.GoraException;
 import ai.platon.gora.util.OperationNotSupportedException;
 import org.apache.hadoop.fs.Path;
@@ -71,30 +70,7 @@ public class DataFileAvroStore<K, T extends PersistentBase> extends AvroStore<K,
     }
     return writer;
   }
-  
-  @Override
-  protected Result<K, T> executeQueryInternal(Query<K, T> query) throws IOException {
-      return new DataFileAvroResult<>(this, query
-          , createReader(createFsInput()));
-  }
- 
-  @Override
-  protected Result<K,T> executePartial(FileSplitPartitionQuery<K,T> query) throws IOException {
-      FsInput fsInput = createFsInput();
-      DataFileReader<T> reader = createReader(fsInput);
-      return new DataFileAvroResult<>(this, query, reader, fsInput
-          , query.getStart(), query.getLength());
-  }
-  
-  private DataFileReader<T> createReader(FsInput fsInput) throws IOException {
-    return new DataFileReader<>(fsInput, getDatumReader());
-  }
-  
-  private FsInput createFsInput() throws IOException {
-    Path path = new Path(getInputPath());
-    return new FsInput(path, getConf());
-  }
-  
+
   @Override
   public void flush() throws GoraException {
     try{

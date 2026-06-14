@@ -36,7 +36,6 @@ import ai.platon.gora.avro.query.AvroResult;
 import ai.platon.gora.persistency.impl.PersistentBase;
 import ai.platon.gora.query.Query;
 import ai.platon.gora.query.Result;
-import ai.platon.gora.query.impl.FileSplitPartitionQuery;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.store.impl.FileBackedDataStoreBase;
 import ai.platon.gora.util.GoraException;
@@ -130,26 +129,6 @@ public class AvroStore<K, T extends PersistentBase>
   @Override
   public boolean delete(K key) throws GoraException {
     throw new OperationNotSupportedException("delete is not supported for AvroStore");
-  }
-
-
-  /**
-   * Executes a normal Query reading the whole data. #execute() calls this function
-   * for non-PartitionQuery's.
-   */
-  @Override
-  protected Result<K,T> executeQueryInternal(Query<K,T> query) throws IOException {
-    return new AvroResult<>(this, (AvroQuery<K,T>)query,
-            getDatumReader(), getDecoder());
-  }
-
-  /**
-   * Executes a PartitialQuery, reading the data between start and end.
-   */
-  @Override
-  protected Result<K,T> executePartial(FileSplitPartitionQuery<K,T> query)
-          throws IOException {
-    throw new OperationNotSupportedException("Not yet implemented");
   }
 
   @Override
