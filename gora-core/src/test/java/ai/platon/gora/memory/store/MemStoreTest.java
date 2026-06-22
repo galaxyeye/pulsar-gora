@@ -87,13 +87,15 @@ public class MemStoreTest extends DataStoreTestBase {
         BeanFactory<String, WebPage> beanFactory = new BeanFactoryImpl<>(String.class, WebPage.class);
         store.setBeanFactory(beanFactory);
         WebPageDataCreator.createWebPageData(store);
-        String[] interestFields = new String[2];
+        String[] interestFields = new String[4];
         interestFields[0] = "url";
         interestFields[1] = "content";
+        interestFields[2] = "outlinks";
+        interestFields[3] = "parsedContent";
         WebPage page = store.get(URLS[1], interestFields);
         assertNotNull(page);
         assertNotNull(page.getUrl());
-        assertTrue(page.getOutlinks().size() > 0);
-        assertTrue(page.getParsedContent().size() > 0);
+        assertFalse(page.getOutlinks().isEmpty());
+        assertFalse(page.getParsedContent().isEmpty());
     }
 }
