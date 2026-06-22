@@ -54,9 +54,15 @@ fi
 
 # ── determine release version ────────────────────────────────────────────────
 
-# Extract current version from the root pom.xml (the first <version> that is a
-# child of <project>, i.e. the project version, not a dependency/plugin version).
-CURRENT_VERSION=$(grep -E '^\s*<version>' pom.xml | head -1 | sed -E 's/.*<version>(.*)<\/version>.*/\1/')
+# Extract current version from the root pom.xml.
+# We use awk to skip <version> inside the <parent> block — the project <version>
+# is the one after </packaging> (or the first direct <version> child of <project>
+# that is not inside <parent>).
+CURRENT_VERSION=$(awk '
+  /<parent>/ { in_parent=1 }
+  /<\/parent>/ { in_parent=0; next }
+  !in_parent && /^\s*<version>/ { gsub(/.*<version>|<\/version>.*/, ""); print; exit }
+' pom.xml)
 
 if [ -z "$CURRENT_VERSION" ]; then
   die "Could not extract version from pom.xml"
