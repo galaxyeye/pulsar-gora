@@ -638,25 +638,86 @@ DataStoreBase<K, T> {
   private Object fromMongoUnion(final Schema fieldSchema,
       final DocumentFieldType storeType, final Field field, final String docf,
       final BSONDecorator easybson) throws GoraException {
-    Object result;// schema [type0, type1]
-    Type type0 = fieldSchema.getTypes().get(0).getType();
-    Type type1 = fieldSchema.getTypes().get(1).getType();
+    Object result;
+    // Get the raw value from MongoDB to determine which union type to use
+    Object mongoValue = easybson.containsField(docf) ? easybson.get(docf) : null;
 
-    // Check if types are different and there's a "null", like ["null","type"]
-    // or ["type","null"]
-    if (!type0.equals(type1)
-        && (type0.equals(Type.NULL) || type1.equals(Type.NULL))) {
-      Schema innerSchema = fieldSchema.getTypes().get(1);
-      LOG.debug(
-          "Load from DBObject (UNION), schemaType:{}, docField:{}, storeType:{}",
-          new Object[] { innerSchema.getType(), docf, storeType });
-      // Deserialize as if schema was ["type"]
-      result = fromDocument(innerSchema, storeType, field, docf, easybson);
-    } else {
-      throw new IllegalStateException(
-          "MongoStore doesn't support 3 types union field yet. Please update your mapping");
+    if (mongoValue == null) {
+      // Null value — find the NULL schema
+      for (Schema s : fieldSchema.getTypes()) {
+        if (s.getType().equals(Type.NULL)) {
+          result = null;
+          return result;
+        }
+      }
+      result = null;
+      return result;
     }
+
+    // Find the matching schema based on the MongoDB value's Java type
+    Schema resolvedSchema = null;
+    for (Schema s : fieldSchema.getTypes()) {
+      if (s.getType().equals(Type.NULL)) {
+        continue;
+      }
+      if (isMongoValueMatch(s, mongoValue)) {
+        resolvedSchema = s;
+        break;
+      }
+    }
+
+    if (resolvedSchema == null) {
+      // Fallback: use the first non-null schema
+      for (Schema s : fieldSchema.getTypes()) {
+        if (!s.getType().equals(Type.NULL)) {
+          resolvedSchema = s;
+          break;
+        }
+      }
+    }
+
+    if (resolvedSchema == null) {
+      throw new IllegalStateException(
+          "MongoStore couldn't resolve union schema for field: " + docf);
+    }
+
+    LOG.debug(
+        "Load from DBObject (UNION), resolvedSchemaType:{}, docField:{}, storeType:{}",
+        new Object[] { resolvedSchema.getType(), docf, storeType });
+    result = fromDocument(resolvedSchema, storeType, field, docf, easybson);
     return result;
+  }
+
+  /**
+   * Checks whether the given Avro schema matches the MongoDB value's Java type.
+   */
+  private boolean isMongoValueMatch(Schema schema, Object mongoValue) {
+    switch (schema.getType()) {
+      case STRING:
+        return mongoValue instanceof String || mongoValue instanceof Utf8;
+      case RECORD:
+        return mongoValue instanceof Document;
+      case ARRAY:
+        return mongoValue instanceof java.util.List;
+      case MAP:
+        return mongoValue instanceof Document;
+      case INT:
+        return mongoValue instanceof Integer;
+      case LONG:
+        return mongoValue instanceof Long;
+      case FLOAT:
+        return mongoValue instanceof Float;
+      case DOUBLE:
+        return mongoValue instanceof Double;
+      case BOOLEAN:
+        return mongoValue instanceof Boolean;
+      case BYTES:
+        return mongoValue instanceof byte[] || mongoValue instanceof org.bson.types.Binary;
+      case ENUM:
+        return mongoValue instanceof String || mongoValue instanceof Utf8;
+      default:
+        return true;
+    }
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -888,25 +949,89 @@ DataStoreBase<K, T> {
 
   private Object unionToMongo(final String docf, final Schema fieldSchema,
       final DocumentFieldType storeType, final Object value) {
-    Object result;// schema [type0, type1]
-    Type type0 = fieldSchema.getTypes().get(0).getType();
-    Type type1 = fieldSchema.getTypes().get(1).getType();
-
-    // Check if types are different and there's a "null", like ["null","type"]
-    // or ["type","null"]
-    if (!type0.equals(type1)
-        && (type0.equals(Type.NULL) || type1.equals(Type.NULL))) {
-      Schema innerSchema = fieldSchema.getTypes().get(1);
-      LOG.debug(
-          "Transform value to DBObject (UNION), schemaType:{}, type1:{}, storeType:{}",
-          new Object[] { innerSchema.getType(), type1, storeType });
-      // Deserialize as if schema was ["type"]
-      result = toDocument(docf, innerSchema, type1, storeType, value);
-    } else {
-      throw new IllegalStateException(
-          "MongoStore doesn't support 3 types union field yet. Please update your mapping");
+    Object result;
+    if (value == null) {
+      // For null values, find the NULL schema in the union
+      for (Schema s : fieldSchema.getTypes()) {
+        if (s.getType().equals(Type.NULL)) {
+          result = null;
+          return result;
+        }
+      }
+      result = null;
+      return result;
     }
+
+    // For non-null values, find the matching schema based on the Java type
+    Schema resolvedSchema = null;
+    Type resolvedType = null;
+    for (Schema s : fieldSchema.getTypes()) {
+      if (s.getType().equals(Type.NULL)) {
+        continue;
+      }
+      // Check if the schema type matches the Java type of the value
+      if (isSchemaMatch(s, value)) {
+        resolvedSchema = s;
+        resolvedType = s.getType();
+        break;
+      }
+    }
+
+    if (resolvedSchema == null) {
+      // Fallback: use the first non-null schema
+      for (Schema s : fieldSchema.getTypes()) {
+        if (!s.getType().equals(Type.NULL)) {
+          resolvedSchema = s;
+          resolvedType = s.getType();
+          break;
+        }
+      }
+    }
+
+    if (resolvedSchema == null) {
+      throw new IllegalStateException(
+          "MongoStore couldn't resolve union schema for value: " + value);
+    }
+
+    LOG.debug(
+        "Transform value to DBObject (UNION), resolvedSchemaType:{}, valueType:{}, storeType:{}",
+        new Object[] { resolvedType, value.getClass().getSimpleName(), storeType });
+    result = toDocument(docf, resolvedSchema, resolvedType, storeType, value);
     return result;
+  }
+
+  /**
+   * Checks whether the given Avro schema matches the Java type of the value.
+   */
+  private boolean isSchemaMatch(Schema schema, Object value) {
+    switch (schema.getType()) {
+      case STRING:
+        return value instanceof CharSequence || value instanceof String;
+      case RECORD:
+        return value instanceof PersistentBase;
+      case ARRAY:
+        return value instanceof java.util.List || value instanceof GenericArray;
+      case MAP:
+        return value instanceof java.util.Map;
+      case ENUM:
+        return value instanceof Enum;
+      case INT:
+        return value instanceof Integer;
+      case LONG:
+        return value instanceof Long;
+      case FLOAT:
+        return value instanceof Float;
+      case DOUBLE:
+        return value instanceof Double;
+      case BOOLEAN:
+        return value instanceof Boolean;
+      case BYTES:
+        return value instanceof java.nio.ByteBuffer || value instanceof byte[];
+      case FIXED:
+        return value instanceof org.apache.avro.generic.GenericFixed;
+      default:
+        return true; // For unknown types, attempt to use this schema
+    }
   }
 
   private Document recordToMongo(final String docf,
