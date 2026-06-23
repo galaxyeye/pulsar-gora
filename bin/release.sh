@@ -4,7 +4,7 @@
 #
 # Usage:
 #   ./bin/release.sh                  # derive version from pom.xml, strip -SNAPSHOT
-#   ./bin/release.sh 1.0.2-slim       # explicit release version
+#   ./bin/release.sh 1.0.3-slim       # explicit release version
 #
 # What it does:
 #   1. Strips -SNAPSHOT from the current POM version (if present)

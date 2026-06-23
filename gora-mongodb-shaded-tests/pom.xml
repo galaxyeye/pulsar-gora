@@ -22,7 +22,7 @@
 
   <groupId>ai.platon.gora</groupId>
   <artifactId>gora-mongodb-shaded-tests</artifactId>
-  <version>1.0.2-slim</version>
+  <version>1.0.3-slim</version>
 
   <name>Apache Gora :: Mongodb Shaded Tests</name>
 
@@ -33,7 +33,7 @@
     <dependency>
       <groupId>ai.platon.gora</groupId>
       <artifactId>gora-mongodb-shaded</artifactId>
-      <version>1.0.2-slim</version>
+      <version>1.0.3-slim</version>
     </dependency>
     <!-- END of Gora Dependencies -->
 

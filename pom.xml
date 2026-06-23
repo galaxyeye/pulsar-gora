@@ -29,7 +29,7 @@
   <groupId>ai.platon.gora</groupId>
   <artifactId>gora</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.2-slim</version>
+  <version>1.0.3-slim</version>
 
   <name>Apache Gora</name>
   <description>The Apache Gora version maintained by platon.ai, primarily aimed at continuously upgrading gora-mongodb.</description>
