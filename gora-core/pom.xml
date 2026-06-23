@@ -76,9 +76,36 @@
             <artifactId>hadoop-common</artifactId>
             <version>${hadoop-3.version}</version>
             <exclusions>
+                <!-- Exclude web/servlet stack (not needed for Configuration) -->
                 <exclusion>
+                    <groupId>org.eclipse.jetty</groupId>
                     <artifactId>*</artifactId>
-                    <groupId>*</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.jetty.ee10</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.servlet</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jakarta.servlet.jsp</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <!-- Exclude Jersey REST stack -->
+                <exclusion>
+                    <groupId>com.sun.jersey</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.glassfish.jersey</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <!-- Exclude old HTTP client (we use httpclient5) -->
+                <exclusion>
+                    <groupId>commons-httpclient</groupId>
+                    <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
