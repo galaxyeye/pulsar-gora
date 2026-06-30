@@ -647,6 +647,7 @@
   <modules>
     <module>gora-compiler</module>
     <module>gora-core</module>
+    <module>gora-core-shaded</module>
     <module>gora-mongodb</module>
     <module>gora-mongodb-shaded</module>
   </modules>
@@ -675,6 +676,11 @@
       <dependency>
         <groupId>ai.platon.gora</groupId>
         <artifactId>gora-mongodb</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ai.platon.gora</groupId>
+        <artifactId>gora-core-shaded</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
