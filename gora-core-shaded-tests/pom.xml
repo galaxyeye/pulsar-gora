@@ -79,6 +79,18 @@
     <!-- END of Testing Dependencies -->
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
   <properties>
     <hadoop-3.test.version>3.4.2</hadoop-3.test.version>
 
