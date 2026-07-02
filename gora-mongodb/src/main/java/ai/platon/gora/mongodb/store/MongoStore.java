@@ -17,7 +17,7 @@
  */
 package ai.platon.gora.mongodb.store;
 
-import com.google.common.base.Splitter;
+
 import com.mongodb.*;
 import com.mongodb.client.*;
 import com.mongodb.client.model.CountOptions;
@@ -193,9 +193,9 @@ DataStoreBase<K, T> {
 
     // Build server address
     List<ServerAddress> seeds = new ArrayList<>();
-    Iterable<String> serversArray = Splitter.on(",").split(params.getServers());
+    String[] serversArray = params.getServers().split(",");
     for (String server : serversArray) {
-      Iterator<String> paramsIterator = Splitter.on(":").trimResults().split(server).iterator();
+      Iterator<String> paramsIterator = List.of(server.split(":")).stream().map(String::trim).iterator();
       if (!paramsIterator.hasNext()) {
         // No server, use default
         seeds.add(new ServerAddress());

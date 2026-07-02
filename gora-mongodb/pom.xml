@@ -63,10 +63,6 @@
       <version>${jdom.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-    </dependency>
 
     <!-- Logging API -->
     <dependency>

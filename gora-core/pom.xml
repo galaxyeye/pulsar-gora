@@ -123,11 +123,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
         <!-- Logging API -->
         <dependency>
             <groupId>org.slf4j</groupId>

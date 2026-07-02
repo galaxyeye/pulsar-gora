@@ -65,8 +65,7 @@
                   <!-- Shared logging (consumer provides) -->
                   <exclude>org.slf4j:*</exclude>
                   <exclude>ch.qos.reload4j:*</exclude>
-                  <!-- Shared Guava (consumer provides) -->
-                  <exclude>com.google.guava:*</exclude>
+
                   <!-- Shared JSON (consumer provides) -->
                   <exclude>com.fasterxml.jackson.core:*</exclude>
                   <exclude>com.fasterxml.jackson:*</exclude>

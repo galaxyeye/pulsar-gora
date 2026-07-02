@@ -21,11 +21,11 @@ package ai.platon.gora.persistency.impl;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import ai.platon.gora.persistency.Dirtyable;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
+
 
 public class DirtyMapWrapper<K, V> implements Map<K, V>, Dirtyable {
 
@@ -188,14 +188,9 @@ public class DirtyMapWrapper<K, V> implements Map<K, V>, Dirtyable {
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Set<java.util.Map.Entry<K, V>> entrySet() {
-    Collection<DirtyEntryWrapper<K, V>> dirtyEntrySet = Collections2.transform(
-        delegate.entrySet(),
-        new Function<Entry<K, V>, DirtyEntryWrapper<K, V>>() {
-          @Override
-          public DirtyEntryWrapper<K, V> apply(java.util.Map.Entry<K, V> input) {
-            return new DirtyEntryWrapper<>(input, dirtyFlag);
-          }
-        });
+    Set<DirtyEntryWrapper<K, V>> dirtyEntrySet = delegate.entrySet().stream()
+        .map(input -> new DirtyEntryWrapper<>(input, dirtyFlag))
+        .collect(java.util.stream.Collectors.toSet());
     return new DirtySetWrapper(dirtyEntrySet, dirtyFlag);
   }
 

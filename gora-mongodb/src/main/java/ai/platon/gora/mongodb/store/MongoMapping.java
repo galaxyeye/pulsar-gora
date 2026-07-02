@@ -20,6 +20,7 @@ package ai.platon.gora.mongodb.store;
 import static ai.platon.gora.mongodb.store.MongoMapping.DocumentFieldType.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -27,7 +28,7 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.ImmutableList;
+
 
 /**
  * @author Fabien Poulard fpoulard@dictanova.com
@@ -120,7 +121,7 @@ public class MongoMapping {
       // Check field exists or not and is of valid type
       String intermediateFieldName = partialFieldName.toString();
       if (documentFields.containsKey(intermediateFieldName)) {
-        if (!ImmutableList.of(DOCUMENT, LIST).contains(
+        if (!List.of(DOCUMENT, LIST).contains(
             documentFields.get(intermediateFieldName)))
           throw new IllegalStateException("The field '" + intermediateFieldName
               + "' is already registered in "

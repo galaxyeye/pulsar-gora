@@ -17,7 +17,6 @@
  */
 package ai.platon.gora.mongodb.store;
 
-import com.google.common.collect.Sets;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import ai.platon.gora.mongodb.GoraMongodbTestDriver;
@@ -71,7 +70,7 @@ public class TestMongoStoreMetadataAnalyzer extends TestMongoStore {
 
     @Test
     public void testGetTablesNames() throws GoraException {
-        HashSet<String> actualTablesNames = Sets.newHashSet(storeMetadataAnalyzer.getTablesNames());
+        HashSet<String> actualTablesNames = new HashSet<>(storeMetadataAnalyzer.getTablesNames());
         HashSet<String> expectedTablesNames = new HashSet<String>() {
             {
                 add("frontier");
