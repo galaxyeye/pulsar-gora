@@ -71,7 +71,12 @@
                   <exclude>com.fasterxml.jackson:*</exclude>
                   <exclude>com.google.code.gson:*</exclude>
                   <!-- Shared Apache Commons (consumer provides) -->
-                  <exclude>org.apache.commons:commons-lang3</exclude>
+                  <exclude>org.apache.commons:*</exclude>
+                  <exclude>commons-cli:*</exclude>
+                  <exclude>commons-logging:*</exclude>
+                  <exclude>commons-codec:*</exclude>
+                  <exclude>commons-io:*</exclude>
+                  <exclude>commons-net:*</exclude>
                   <!-- Shared annotations (consumer provides) -->
                   <exclude>com.google.code.findbugs:*</exclude>
                 </excludes>
