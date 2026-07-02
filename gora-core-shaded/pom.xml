@@ -55,7 +55,29 @@
             <configuration>
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <shadedArtifactAttached>false</shadedArtifactAttached>
-              <minimizeJar>false</minimizeJar>
+              <minimizeJar>true</minimizeJar>
+
+              <!-- Exclude shared libraries that the consumer provides at runtime.
+                   Keeps: gora-core, Hadoop, Flink, Avro, and all their
+                   transitive dependencies. -->
+              <artifactSet>
+                <excludes>
+                  <!-- Shared logging (consumer provides) -->
+                  <exclude>org.slf4j:*</exclude>
+                  <exclude>ch.qos.reload4j:*</exclude>
+                  <!-- Shared Guava (consumer provides) -->
+                  <exclude>com.google.guava:*</exclude>
+                  <!-- Shared JSON (consumer provides) -->
+                  <exclude>com.fasterxml.jackson.core:*</exclude>
+                  <exclude>com.fasterxml.jackson:*</exclude>
+                  <exclude>com.google.code.gson:*</exclude>
+                  <!-- Shared Apache Commons (consumer provides) -->
+                  <exclude>org.apache.commons:commons-lang3</exclude>
+                  <!-- Shared annotations (consumer provides) -->
+                  <exclude>com.google.code.findbugs:*</exclude>
+                </excludes>
+              </artifactSet>
+
               <filters>
                 <filter>
                   <artifact>*:*</artifact>
@@ -63,6 +85,47 @@
                     <exclude>META-INF/*.SF</exclude>
                     <exclude>META-INF/*.DSA</exclude>
                     <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+                <!-- Strip Hadoop IPC/HA/HTTP — not needed by gora-core -->
+                <filter>
+                  <artifact>org.apache.hadoop:hadoop-common</artifact>
+                  <excludes>
+                    <exclude>org/apache/hadoop/ipc/**</exclude>
+                    <exclude>org/apache/hadoop/ha/**</exclude>
+                    <exclude>org/apache/hadoop/security/authorize/**</exclude>
+                    <exclude>org/apache/hadoop/http/**</exclude>
+                  </excludes>
+                </filter>
+                <!-- Strip hadoop-auth internals -->
+                <filter>
+                  <artifact>org.apache.hadoop:hadoop-auth</artifact>
+                  <excludes>
+                    <exclude>org/apache/hadoop/security/authentication/**</exclude>
+                  </excludes>
+                </filter>
+                <!-- Trim heavy transitive deps of hadoop that gora-core never uses -->
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>io/netty/**</exclude>
+                    <exclude>org/bouncycastle/**</exclude>
+                    <exclude>org/apache/zookeeper/**</exclude>
+                    <exclude>org/xbill/**</exclude>
+                    <exclude>com/nimbusds/**</exclude>
+                    <exclude>com/jcraft/**</exclude>
+                    <exclude>com/codahale/**</exclude>
+                    <exclude>com/ctc/**</exclude>
+                    <exclude>org/glassfish/**</exclude>
+                    <exclude>org/tukaani/**</exclude>
+                    <exclude>javax/servlet/**</exclude>
+                    <exclude>javax/el/**</exclude>
+                    <exclude>jakarta/servlet/**</exclude>
+                    <exclude>jakarta/el/**</exclude>
+                    <exclude>org/apache/curator/**</exclude>
+                    <exclude>org/apache/hadoop/thirdparty/protobuf/**</exclude>
+                    <exclude>META-INF/versions/*/org/bouncycastle/**</exclude>
+                    <exclude>META-INF/versions/*/io/netty/**</exclude>
                   </excludes>
                 </filter>
               </filters>
