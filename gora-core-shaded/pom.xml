@@ -149,6 +149,7 @@
                 <filter>
                   <artifact>*:*</artifact>
                   <excludes>
+                    <!-- Heavy transitive deps: never used by gora -->
                     <exclude>io/netty/**</exclude>
                     <exclude>org/bouncycastle/**</exclude>
                     <exclude>org/apache/zookeeper/**</exclude>
@@ -165,6 +166,28 @@
                     <exclude>jakarta/el/**</exclude>
                     <exclude>org/apache/curator/**</exclude>
                     <exclude>org/apache/hadoop/thirdparty/protobuf/**</exclude>
+                    <!-- Flink: gora-core has Flink integration but we never use it -->
+                    <exclude>org/apache/flink/**</exclude>
+                    <!-- Snappy native libs: dead weight after excluding io/compress -->
+                    <exclude>org/xerial/snappy/native/**</exclude>
+                    <!-- Static config/data files: never needed at runtime -->
+                    <exclude>core-default.xml</exclude>
+                    <exclude>mozilla/**</exclude>
+                    <exclude>messages.properties</exclude>
+                    <!-- Protobuf source files: compiled classes suffice -->
+                    <exclude>**/*.proto</exclude>
+                    <!-- XML schemas: not needed at runtime -->
+                    <exclude>jakarta/xml/bind/*.xsd</exclude>
+                    <!-- Build metadata: useless at runtime -->
+                    <exclude>META-INF/maven/**</exclude>
+                    <exclude>META-INF/native-image/**</exclude>
+                    <exclude>META-INF/proguard/**</exclude>
+                    <exclude>META-INF/versions/*/OSGI-INF/**</exclude>
+                    <!-- Stale ServiceLoader entries for excluded subsystems -->
+                    <exclude>META-INF/services/org.apache.hadoop.security.**</exclude>
+                    <exclude>META-INF/services/org.apache.hadoop.io.erasurecode.**</exclude>
+                    <exclude>META-INF/services/org.apache.hadoop.crypto.**</exclude>
+                    <exclude>META-INF/services/org.apache.hadoop.io.compress.**</exclude>
                     <exclude>META-INF/versions/*/org/bouncycastle/**</exclude>
                     <exclude>META-INF/versions/*/io/netty/**</exclude>
                   </excludes>
