@@ -36,6 +36,7 @@
       <groupId>ai.platon.gora</groupId>
       <artifactId>gora-mongodb</artifactId>
       <version>${project.version}</version>
+      <optional>true</optional>
       <scope>runtime</scope>
       <exclusions>
         <exclusion>

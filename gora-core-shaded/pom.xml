@@ -36,6 +36,7 @@
       <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core</artifactId>
       <version>${project.version}</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
