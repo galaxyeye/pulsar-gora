@@ -23,7 +23,7 @@
   <parent>
     <groupId>ai.platon.gora</groupId>
     <artifactId>gora</artifactId>
-    <version>1.0.5-slim</version>
+    <version>1.0.6-slim</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -127,6 +127,28 @@
                     <exclude>org/apache/hadoop/log/**</exclude>
                     <exclude>org/apache/hadoop/portmap/**</exclude>
                     <exclude>org/apache/hadoop/jmx/**</exclude>
+                    <!-- FS sub-packages: only org/apache/hadoop/fs (core) is needed -->
+                    <exclude>org/apache/hadoop/fs/viewfs/**</exclude>
+                    <exclude>org/apache/hadoop/fs/statistics/**</exclude>
+                    <exclude>org/apache/hadoop/fs/impl/**</exclude>
+                    <exclude>org/apache/hadoop/fs/http/**</exclude>
+                    <exclude>org/apache/hadoop/fs/store/**</exclude>
+                    <exclude>org/apache/hadoop/fs/shell/**</exclude>
+                    <exclude>org/apache/hadoop/fs/sftp/**</exclude>
+                    <exclude>org/apache/hadoop/fs/local/**</exclude>
+                    <exclude>org/apache/hadoop/fs/audit/**</exclude>
+                    <exclude>org/apache/hadoop/fs/protocolPB/**</exclude>
+                    <!-- IO sub-packages: only io core + io/serializer are needed -->
+                    <exclude>org/apache/hadoop/io/nativeio/**</exclude>
+                    <exclude>org/apache/hadoop/io/retry/**</exclude>
+                    <exclude>org/apache/hadoop/io/erasurecode/**</exclude>
+                    <exclude>org/apache/hadoop/io/compress/**</exclude>
+                    <exclude>org/apache/hadoop/io/wrappedio/**</exclude>
+                    <!-- Util sub-packages: only util core is needed -->
+                    <exclude>org/apache/hadoop/util/curator/**</exclude>
+                    <exclude>org/apache/hadoop/util/dynamic/**</exclude>
+                    <exclude>org/apache/hadoop/util/concurrent/**</exclude>
+                    <exclude>org/apache/hadoop/util/functional/**</exclude>
                   </excludes>
                 </filter>
                 <filter>

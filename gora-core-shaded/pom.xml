@@ -23,7 +23,7 @@
   <parent>
     <groupId>ai.platon.gora</groupId>
     <artifactId>gora</artifactId>
-    <version>1.0.5-slim</version>
+    <version>1.0.6-slim</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -91,14 +91,51 @@
                     <exclude>META-INF/*.RSA</exclude>
                   </excludes>
                 </filter>
-                <!-- Strip Hadoop IPC/HA/HTTP — not needed by gora-core -->
+                <!-- Strip Hadoop subsystems never exercised by gora-core.
+                     Only conf, fs (core), io (core), util, and io/serializer are needed.
+                     Excluding: security, metrics2, crypto, net, tracing, viewfs,
+                     statistics, and all unused fs/io sub-packages. -->
                 <filter>
                   <artifact>org.apache.hadoop:hadoop-common</artifact>
                   <excludes>
                     <exclude>org/apache/hadoop/ipc/**</exclude>
                     <exclude>org/apache/hadoop/ha/**</exclude>
-                    <exclude>org/apache/hadoop/security/authorize/**</exclude>
                     <exclude>org/apache/hadoop/http/**</exclude>
+                    <!-- Security: Kerberos, tokens, SSL, aliases — not needed -->
+                    <exclude>org/apache/hadoop/security/**</exclude>
+                    <!-- Metrics2: metrics framework — not needed -->
+                    <exclude>org/apache/hadoop/metrics2/**</exclude>
+                    <!-- Crypto: KMS, key providers, ciphers — not needed -->
+                    <exclude>org/apache/hadoop/crypto/**</exclude>
+                    <!-- Net: network topology — not needed -->
+                    <exclude>org/apache/hadoop/net/**</exclude>
+                    <!-- Tracing: HTrace integration — not needed -->
+                    <exclude>org/apache/hadoop/tracing/**</exclude>
+                    <!-- FS sub-packages: only org/apache/hadoop/fs (core) is needed -->
+                    <exclude>org/apache/hadoop/fs/viewfs/**</exclude>
+                    <exclude>org/apache/hadoop/fs/statistics/**</exclude>
+                    <exclude>org/apache/hadoop/fs/impl/**</exclude>
+                    <exclude>org/apache/hadoop/fs/http/**</exclude>
+                    <exclude>org/apache/hadoop/fs/store/**</exclude>
+                    <exclude>org/apache/hadoop/fs/shell/**</exclude>
+                    <exclude>org/apache/hadoop/fs/sftp/**</exclude>
+                    <exclude>org/apache/hadoop/fs/local/**</exclude>
+                    <exclude>org/apache/hadoop/fs/audit/**</exclude>
+                    <exclude>org/apache/hadoop/fs/protocolPB/**</exclude>
+                    <!-- IO sub-packages: only io core + io/serializer are needed -->
+                    <exclude>org/apache/hadoop/io/nativeio/**</exclude>
+                    <exclude>org/apache/hadoop/io/retry/**</exclude>
+                    <exclude>org/apache/hadoop/io/erasurecode/**</exclude>
+                    <exclude>org/apache/hadoop/io/compress/**</exclude>
+                    <exclude>org/apache/hadoop/io/wrappedio/**</exclude>
+                    <!-- Other unused subsystems -->
+                    <exclude>org/apache/hadoop/jmx/**</exclude>
+                    <exclude>org/apache/hadoop/service/**</exclude>
+                    <exclude>org/apache/hadoop/tools/**</exclude>
+                    <exclude>org/apache/hadoop/util/curator/**</exclude>
+                    <exclude>org/apache/hadoop/util/dynamic/**</exclude>
+                    <exclude>org/apache/hadoop/util/concurrent/**</exclude>
+                    <exclude>org/apache/hadoop/util/functional/**</exclude>
                   </excludes>
                 </filter>
                 <!-- Strip hadoop-auth internals -->
