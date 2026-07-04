@@ -24,7 +24,7 @@
     <parent>
         <groupId>ai.platon.gora</groupId>
         <artifactId>gora</artifactId>
-        <version>1.0.6-slim</version>
+        <version>1.0.7-slim</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
