@@ -189,8 +189,11 @@
                     <exclude>META-INF/services/org.apache.hadoop.io.erasurecode.**</exclude>
                     <exclude>META-INF/services/org.apache.hadoop.crypto.**</exclude>
                     <exclude>META-INF/services/org.apache.hadoop.io.compress.**</exclude>
+                    <!-- Orphaned dnsjava service: class was excluded but service file remained -->
+                    <exclude>META-INF/services/java.net.spi.InetAddressResolverProvider</exclude>
                     <exclude>META-INF/versions/*/org/bouncycastle/**</exclude>
                     <exclude>META-INF/versions/*/io/netty/**</exclude>
+                    <exclude>META-INF/versions/*/org/xbill/**</exclude>
                   </excludes>
                 </filter>
               </filters>
