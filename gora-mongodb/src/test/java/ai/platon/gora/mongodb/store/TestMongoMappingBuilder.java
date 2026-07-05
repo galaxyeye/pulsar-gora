@@ -17,13 +17,13 @@
  */
 package ai.platon.gora.mongodb.store;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
 import ai.platon.gora.examples.generated.WebPage;
 import ai.platon.gora.mongodb.store.MongoMapping.DocumentFieldType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestMongoMappingBuilder {
 

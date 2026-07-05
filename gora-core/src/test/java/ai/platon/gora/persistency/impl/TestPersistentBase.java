@@ -30,9 +30,9 @@ import ai.platon.gora.memory.store.MemStore;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.store.DataStoreTestUtil;
 import org.apache.hadoop.conf.Configuration;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.Test;
 
 /**
  * Testcase for PersistentBase class

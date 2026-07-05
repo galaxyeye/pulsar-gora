@@ -21,13 +21,13 @@ package ai.platon.gora.store;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import org.junit.BeforeClass;
-import org.junit.Before;
-import org.junit.AfterClass;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.Ignore;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +71,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
 	  persistentValClass = pValClass;
   }
   
-  @BeforeClass
+  @BeforeAll
   public static void setUpClass() throws Exception {
     if(testDriver != null && !setUpClassCalled) {
       log.info("setting up class");
@@ -80,14 +80,14 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     }
   }
 
-  @AfterClass
+  @AfterAll
   public static void tearDownClass() throws Exception {
 	log.info("tearing down class");
     //if(testDriver != null) 
     //  testDriver.tearDownClass();
   }
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     //There is an issue in JUnit 4 tests in Eclipse where TestSqlStore static
     //methods are not called BEFORE setUpClass. I think this is a bug in 
@@ -105,7 +105,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     }
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     log.info("tearing down test");
     if(testDriver != null)
@@ -194,7 +194,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertPutBytes(contentBytes);
   }
 
-  @Ignore
+  @Disabled
   public void assertPutBytes(byte[] contentBytes) throws IOException {
   }
 
@@ -204,7 +204,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertPutMap();
   }
 
-  @Ignore
+  @Disabled
   public void assertPutMap() throws IOException {
   }
 
@@ -214,11 +214,11 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertTestUpdateDataStore();
   }
 
-  @Ignore
+  @Disabled
   public void assertTestUpdateDataStore(){
   }
 
-  @Ignore
+  @Disabled
   @Test
   public void testEmptyUpdate() throws Exception {
   }
@@ -229,7 +229,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertTestGetDataStore();
   }
 
-  @Ignore
+  @Disabled
   public void assertTestGetDataStore() throws IOException {
   }
   
@@ -244,7 +244,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertTestQueryDataStore();
   }
 
-  @Ignore
+  @Disabled
   public void assertTestQueryDataStore() throws IOException {
   }
 
@@ -264,7 +264,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertTestQueryKeyRange();
   }
 
-  @Ignore
+  @Disabled
   public void assertTestQueryKeyRange(){}
   
   @Test
@@ -273,7 +273,7 @@ public abstract class WSDataStoreTestBase<K, T extends Persistent> {
     assertTestDeleteDataStore();
   }
 
-  @Ignore
+  @Disabled
   public void assertTestDeleteDataStore(){}
 
 

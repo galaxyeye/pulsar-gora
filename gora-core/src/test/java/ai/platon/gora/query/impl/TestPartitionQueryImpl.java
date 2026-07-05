@@ -22,7 +22,7 @@ import ai.platon.gora.mock.persistency.MockPersistent;
 import ai.platon.gora.mock.query.MockQuery;
 import ai.platon.gora.mock.store.MockDataStore;
 import org.apache.hadoop.io.TestWritable;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test case for {@link PartitionQueryImpl}

@@ -18,7 +18,7 @@
 package ai.platon.gora.mongodb.authentications;
 
 import ai.platon.gora.mongodb.store.TestMongoStore;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.testcontainers.containers.GenericContainer;
 
 import static ai.platon.gora.mongodb.authentications.GoraMongodbAuthenticationTestDriver.mongoContainer;
@@ -26,7 +26,7 @@ import static ai.platon.gora.mongodb.authentications.GoraMongodbAuthenticationTe
 /**
  * Perform {@link TestMongoStore} tests on MongoDB 3.6.x server with Plain Authentication mechanism.
  */
-@Ignore("RequiresAuth")
+@Disabled("RequiresAuth")
 public class PLAIN_AuthenticationTest extends TestMongoStore {
 
     public static final String AUTH_MECHANISMS = "PLAIN";

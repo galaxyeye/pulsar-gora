@@ -4,6 +4,9 @@ import ai.platon.gora.persistency.Persistent;
 import ai.platon.gora.store.DataStore;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.util.GoraException;
+import ai.platon.pulsar.common.LogsKt;
+import ai.platon.pulsar.common.config.AppConstants;
+import ai.platon.pulsar.common.config.CapabilityTypes;
 import ai.platon.pulsar.common.config.ImmutableConfig;
 import ai.platon.pulsar.persist.HadoopUtils;
 import ai.platon.pulsar.persist.gora.generated.GWebPage;
@@ -13,10 +16,6 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-
-import static ai.platon.pulsar.common.LogsKt.warnForClose;
-import static ai.platon.pulsar.common.config.AppConstants.WEBPAGE_SCHEMA;
-import static ai.platon.pulsar.common.config.CapabilityTypes.*;
 
 public class GoraStorage {
     public static final Logger logger = LoggerFactory.getLogger(GoraStorage.class);
@@ -40,7 +39,7 @@ public class GoraStorage {
     createDataStore(ImmutableConfig conf,
                     Class<K> keyClass, Class<V> persistentClass, Class<? extends DataStore<K, V>> dataStoreClass
     ) throws GoraException {
-        String crawlId = conf.get(STORAGE_CRAWL_ID, "");
+        String crawlId = conf.get(CapabilityTypes.STORAGE_CRAWL_ID, "");
         String schemaPrefix = "";
         if (!crawlId.isEmpty()) {
             schemaPrefix = crawlId + "_";
@@ -48,7 +47,7 @@ public class GoraStorage {
 
         String schema;
         if (GWebPage.class.equals(persistentClass)) {
-            schema = conf.get(STORAGE_SCHEMA_WEBPAGE, WEBPAGE_SCHEMA);
+            schema = conf.get(CapabilityTypes.STORAGE_SCHEMA_WEBPAGE, AppConstants.WEBPAGE_SCHEMA);
         } else {
             throw new UnsupportedOperationException("Unable to create storage for class " + persistentClass);
         }
@@ -84,7 +83,7 @@ public class GoraStorage {
                 try {
                     ((DataStore<?, ?>) store).close();
                 } catch (Exception e) {
-                    warnForClose(store, e);
+                    LogsKt.warnForClose(store, e);
                 }
             }
         });
@@ -98,7 +97,7 @@ public class GoraStorage {
             String schema
     ) throws GoraException {
         org.apache.hadoop.conf.Configuration hadoopConf = HadoopUtils.INSTANCE.toHadoopConfiguration(conf);
-        hadoopConf.set(STORAGE_PREFERRED_SCHEMA_NAME, realSchema);
+        hadoopConf.set(CapabilityTypes.STORAGE_PREFERRED_SCHEMA_NAME, realSchema);
 
         DataStore<K, V> dataStore = DataStoreFactory.createDataStore(dataStoreClass,
                 keyClass, persistentClass, hadoopConf, goraProperties, schema);

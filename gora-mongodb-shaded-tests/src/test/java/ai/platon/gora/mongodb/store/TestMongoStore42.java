@@ -20,10 +20,10 @@ package ai.platon.gora.mongodb.store;
 import ai.platon.gora.mongodb.GoraMongodbTestDriver;
 import ai.platon.gora.mongodb.utils.BSONDecorator;
 import org.bson.Document;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.mongodb.MongoDBContainer;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Perform {@link TestMongoStore} tests on MongoDB 4.2.x server.

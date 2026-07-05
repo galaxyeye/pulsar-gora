@@ -18,14 +18,14 @@
 
 package ai.platon.gora.mongodb.store;
 
-import junit.framework.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.apache.commons.io.IOUtils;
 import ai.platon.gora.examples.generated.Employee;
 import ai.platon.gora.store.DataStoreFactory;
 import org.apache.hadoop.conf.Configuration;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.mongodb.MongoDBContainer;
 
 import java.io.IOException;
@@ -39,12 +39,12 @@ public class TestMongoStoreMappingFromProperties {
 
     public final static MongoDBContainer _container = new MongoDBContainer("mongo:4.2");
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         _container.start();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
         if (_container.isRunning()) {
             _container.stop();
@@ -83,7 +83,7 @@ public class TestMongoStoreMappingFromProperties {
         builder.fromInputStream(IOUtils.toInputStream(mappingXml, (Charset) null));
         MongoMapping expectedMapping = builder.build();
 
-        Assert.assertEquals(expectedMapping, actualMapping);
+        Assertions.assertEquals(expectedMapping, actualMapping);
     }
 
 }

@@ -18,10 +18,11 @@
 package ai.platon.gora.mongodb.store;
 
 import java.util.Locale;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ai.platon.gora.mongodb.store.MongoMapping.DocumentFieldType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class TestMongoMapping {
 
@@ -165,28 +166,34 @@ public class TestMongoMapping {
   }
 
   /** Add conflicting fields */
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void addConflictingFields1() {
-    MongoMapping mapping = new MongoMapping();
-    mapping.addClassField("classFieldName", "top1", "int32");
-    mapping.addClassField("classFieldName", "top1.l2", "double"); // conflict
+    assertThrows(IllegalStateException.class, () -> {
+      MongoMapping mapping = new MongoMapping();
+      mapping.addClassField("classFieldName", "top1", "int32");
+      mapping.addClassField("classFieldName", "top1.l2", "double"); // conflict
+    });
   }
 
   /** Add conflicting fields */
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void addConflictingFields2() {
-    MongoMapping mapping = new MongoMapping();
-    mapping.addClassField("classFieldName", "top1", "int64");
-    mapping.addClassField("classFieldName", "top1", "string"); // conflict
+    assertThrows(IllegalStateException.class, () -> {
+      MongoMapping mapping = new MongoMapping();
+      mapping.addClassField("classFieldName", "top1", "int64");
+      mapping.addClassField("classFieldName", "top1", "string"); // conflict
+    });
   }
 
   /** Add conflicting fields */
-  @Test(expected = IllegalStateException.class)
+  @Test
   public void addConflictingFields3() {
-    MongoMapping mapping = new MongoMapping();
-    mapping.addClassField("classFieldName", "top1", "document");
-    mapping.addClassField("classFieldName", "top1.l2", "string");
-    mapping.addClassField("classFieldName", "top1.l2.l3", "double"); // conflict
+    assertThrows(IllegalStateException.class, () -> {
+      MongoMapping mapping = new MongoMapping();
+      mapping.addClassField("classFieldName", "top1", "document");
+      mapping.addClassField("classFieldName", "top1.l2", "string");
+      mapping.addClassField("classFieldName", "top1.l2.l3", "double"); // conflict
+    });
   }
 
 }

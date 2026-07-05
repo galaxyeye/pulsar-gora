@@ -33,9 +33,9 @@ import ai.platon.gora.util.AvroUtils;
 import ai.platon.gora.util.ByteUtils;
 import org.apache.avro.util.Utf8;
 import org.apache.hadoop.conf.Configuration;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +43,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests that verify the gora-core-shaded artifact works correctly.
@@ -57,7 +57,7 @@ public class CoreShadedTest {
   private DataStore<String, Employee> employeeStore;
   private DataStore<String, WebPage> webPageStore;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     Configuration conf = new Configuration();
     Properties properties = new Properties();
@@ -72,7 +72,7 @@ public class CoreShadedTest {
     log.info("Test setup complete");
   }
 
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     if (employeeStore != null) {
       employeeStore.deleteSchema();
@@ -91,18 +91,18 @@ public class CoreShadedTest {
     log.info("test method: testShadedJarClassesAccessible");
 
     // Verify core interfaces are accessible
-    assertNotNull("MemStore should be accessible", MemStore.class);
+    assertNotNull(MemStore.class, "MemStore should be accessible");
 
     // Verify DataStoreFactory works
-    assertNotNull("DataStoreFactory should be accessible", DataStoreFactory.class);
+    assertNotNull(DataStoreFactory.class, "DataStoreFactory should be accessible");
 
     // Verify Persistent classes are accessible
     Employee employee = Employee.newBuilder().build();
-    assertNotNull("Employee should be creatable", employee);
+    assertNotNull(employee, "Employee should be creatable");
 
     // Verify utility classes are accessible
-    assertNotNull("AvroUtils should be accessible", AvroUtils.class);
-    assertNotNull("ByteUtils should be accessible", ByteUtils.class);
+    assertNotNull(AvroUtils.class, "AvroUtils should be accessible");
+    assertNotNull(ByteUtils.class, "ByteUtils should be accessible");
 
     log.info("All core shaded classes are accessible");
   }
@@ -113,14 +113,14 @@ public class CoreShadedTest {
   public void testCreateSchema() throws Exception {
     log.info("test method: testCreateSchema");
     employeeStore.createSchema();
-    assertTrue("Schema should exist after creation", employeeStore.schemaExists());
+    assertTrue(employeeStore.schemaExists(), "Schema should exist after creation");
   }
 
   @Test
   public void testDeleteSchema() throws Exception {
     log.info("test method: testDeleteSchema");
     employeeStore.createSchema();
-    assertTrue("Schema should exist", employeeStore.schemaExists());
+    assertTrue(employeeStore.schemaExists(), "Schema should exist");
     employeeStore.deleteSchema();
     // MemStore may auto-create schema on access, so we just verify
     // that deleteSchema completes without exception
@@ -135,11 +135,11 @@ public class CoreShadedTest {
     employeeStore.put("test-ssn", employee);
     employeeStore.flush();
 
-    assertTrue("Employee should exist before truncate", employeeStore.exists("test-ssn"));
+    assertTrue(employeeStore.exists("test-ssn"), "Employee should exist before truncate");
 
     employeeStore.truncateSchema();
 
-    assertFalse("Employee should not exist after truncate", employeeStore.exists("test-ssn"));
+    assertFalse(employeeStore.exists("test-ssn"), "Employee should not exist after truncate");
   }
 
   // ---- CRUD tests ----
@@ -154,7 +154,7 @@ public class CoreShadedTest {
     employeeStore.flush();
 
     Employee retrieved = employeeStore.get("12345");
-    assertNotNull("Retrieved employee should not be null", retrieved);
+    assertNotNull(retrieved, "Retrieved employee should not be null");
     assertEquals("John Doe", retrieved.getName().toString());
     assertEquals(100000, retrieved.getSalary().intValue());
     assertEquals("12345", retrieved.getSsn().toString());
@@ -172,7 +172,7 @@ public class CoreShadedTest {
     // Get with specific fields
     String[] fields = {"name", "salary"};
     Employee retrieved = employeeStore.get("fields-test", fields);
-    assertNotNull("Retrieved employee should not be null", retrieved);
+    assertNotNull(retrieved, "Retrieved employee should not be null");
     assertEquals("Jane Doe", retrieved.getName().toString());
     assertEquals(120000, retrieved.getSalary().intValue());
   }
@@ -183,7 +183,7 @@ public class CoreShadedTest {
     employeeStore.createSchema();
 
     Employee retrieved = employeeStore.get("_NON_EXISTING_KEY_");
-    assertNull("Non-existing key should return null", retrieved);
+    assertNull(retrieved, "Non-existing key should return null");
   }
 
   @Test
@@ -196,12 +196,12 @@ public class CoreShadedTest {
     employeeStore.put(key, employee);
     employeeStore.flush();
 
-    assertTrue("Employee should exist after put", employeeStore.exists(key));
-    assertFalse("Non-existing key should not exist", employeeStore.exists("no-such-key"));
+    assertTrue(employeeStore.exists(key), "Employee should exist after put");
+    assertFalse(employeeStore.exists("no-such-key"), "Non-existing key should not exist");
 
     employeeStore.delete(key);
     employeeStore.flush();
-    assertFalse("Employee should not exist after delete", employeeStore.exists(key));
+    assertFalse(employeeStore.exists(key), "Employee should not exist after delete");
   }
 
   @Test
@@ -214,13 +214,13 @@ public class CoreShadedTest {
     employeeStore.put(key, employee);
     employeeStore.flush();
 
-    assertTrue("Employee should exist before delete", employeeStore.exists(key));
+    assertTrue(employeeStore.exists(key), "Employee should exist before delete");
 
     employeeStore.delete(key);
     employeeStore.flush();
 
-    assertFalse("Employee should not exist after delete", employeeStore.exists(key));
-    assertNull("Get should return null after delete", employeeStore.get(key));
+    assertFalse(employeeStore.exists(key), "Employee should not exist after delete");
+    assertNull(employeeStore.get(key), "Get should return null after delete");
   }
 
   @Test
@@ -243,7 +243,7 @@ public class CoreShadedTest {
     employeeStore.flush();
 
     Employee retrieved = employeeStore.get(key);
-    assertNotNull("Retrieved employee should not be null", retrieved);
+    assertNotNull(retrieved, "Retrieved employee should not be null");
     assertEquals("Updated Name", retrieved.getName().toString());
     assertEquals(150000, retrieved.getSalary().intValue());
   }
@@ -266,12 +266,12 @@ public class CoreShadedTest {
 
     int count = 0;
     while (result.next()) {
-      assertNotNull("Result key should not be null", result.getKey());
-      assertNotNull("Result value should not be null", result.get());
+      assertNotNull(result.getKey(), "Result key should not be null");
+      assertNotNull(result.get(), "Result value should not be null");
       count++;
     }
     result.close();
-    assertEquals("Should have 5 employees", 5, count);
+    assertEquals(5, count, "Should have 5 employees");
   }
 
   @Test
@@ -298,7 +298,7 @@ public class CoreShadedTest {
       count++;
     }
     result.close();
-    assertEquals("Should have 3 employees in range", 3, count);
+    assertEquals(3, count, "Should have 3 employees in range");
   }
 
   @Test
@@ -322,7 +322,7 @@ public class CoreShadedTest {
       count++;
     }
     result.close();
-    assertEquals("Should be limited to 3 results", 3, count);
+    assertEquals(3, count, "Should be limited to 3 results");
   }
 
   // ---- Nested object tests ----
@@ -345,8 +345,8 @@ public class CoreShadedTest {
     webPageStore.flush();
 
     WebPage retrieved = webPageStore.get("com.example/http");
-    assertNotNull("Retrieved WebPage should not be null", retrieved);
-    assertNotNull("Metadata should not be null", retrieved.getMetadata());
+    assertNotNull(retrieved, "Retrieved WebPage should not be null");
+    assertNotNull(retrieved.getMetadata(), "Metadata should not be null");
     assertEquals(1, retrieved.getMetadata().getVersion().intValue());
     assertEquals(new Utf8("value1"), retrieved.getMetadata().getData().get(new Utf8("key1")));
   }
@@ -367,7 +367,7 @@ public class CoreShadedTest {
     webPageStore.flush();
 
     WebPage retrieved = webPageStore.get("org.example/http");
-    assertNotNull("Retrieved WebPage should not be null", retrieved);
+    assertNotNull(retrieved, "Retrieved WebPage should not be null");
     assertEquals(3, retrieved.getParsedContent().size());
   }
 
@@ -385,7 +385,7 @@ public class CoreShadedTest {
     webPageStore.flush();
 
     WebPage retrieved = webPageStore.get("net.example/http");
-    assertNotNull("Retrieved WebPage should not be null", retrieved);
+    assertNotNull(retrieved, "Retrieved WebPage should not be null");
     assertEquals(2, retrieved.getOutlinks().size());
     assertEquals(new Utf8("anchorA"), retrieved.getOutlinks().get(new Utf8("http://a.com")));
   }
@@ -402,7 +402,7 @@ public class CoreShadedTest {
     // Verify all URLs were stored
     for (String url : WebPageDataCreator.URLS) {
       WebPage page = webPageStore.get(url);
-      assertNotNull("WebPage should exist for URL: " + url, page);
+      assertNotNull(page, "WebPage should exist for URL: " + url);
     }
   }
 
@@ -415,8 +415,8 @@ public class CoreShadedTest {
     Employee employee = createEmployee("avro-util", "Avro User", 75000);
 
     String[] fieldNames = AvroUtils.getSchemaFieldNames(Employee.SCHEMA$);
-    assertNotNull("Field names should not be null", fieldNames);
-    assertTrue("Should have multiple fields", fieldNames.length > 0);
+    assertNotNull(fieldNames, "Field names should not be null");
+    assertTrue(fieldNames.length > 0, "Should have multiple fields");
   }
 
   @Test
@@ -436,7 +436,7 @@ public class CoreShadedTest {
         new BeanFactoryImpl<>(String.class, Employee.class);
 
     Employee employee = factory.newPersistent();
-    assertNotNull("New persistent should not be null", employee);
+    assertNotNull(employee, "New persistent should not be null");
     assertEquals(Employee.class, employee.getClass());
   }
 
@@ -447,9 +447,9 @@ public class CoreShadedTest {
     Employee emp1 = employeeStore.newPersistent();
     Employee emp2 = employeeStore.newPersistent();
 
-    assertNotNull("First persistent should not be null", emp1);
-    assertNotNull("Second persistent should not be null", emp2);
-    assertNotSame("Should be different instances", emp1, emp2);
+    assertNotNull(emp1, "First persistent should not be null");
+    assertNotNull(emp2, "Second persistent should not be null");
+    assertNotSame(emp1, emp2, "Should be different instances");
     assertEquals(Employee.class, emp1.getClass());
   }
 
@@ -468,8 +468,8 @@ public class CoreShadedTest {
     employeeStore.flush();
 
     Employee retrieved = employeeStore.get("recursive-ssn");
-    assertNotNull("Retrieved employee should not be null", retrieved);
-    assertNotNull("Boss should not be null", retrieved.getBoss());
+    assertNotNull(retrieved, "Retrieved employee should not be null");
+    assertNotNull(retrieved.getBoss(), "Boss should not be null");
 
     Employee retrievedBoss = (Employee) retrieved.getBoss();
     assertEquals("Subordinate", retrievedBoss.getName().toString());
@@ -491,8 +491,8 @@ public class CoreShadedTest {
       count++;
     }
     result.close();
-    assertEquals("Result size should match actual count", count, size);
-    assertEquals("Should have expected number of pages", WebPageDataCreator.URLS.length, count);
+    assertEquals(count, size, "Result size should match actual count");
+    assertEquals(WebPageDataCreator.URLS.length, count, "Should have expected number of pages");
   }
 
   // ---- Helper methods ----

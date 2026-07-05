@@ -26,9 +26,9 @@ import ai.platon.gora.store.impl.DataStoreMetadataAnalyzer;
 import ai.platon.gora.util.GoraException;
 import org.apache.hadoop.conf.Configuration;
 import org.bson.Document;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.mongodb.MongoDBContainer;
 
 import java.util.*;
@@ -47,7 +47,7 @@ public class TestMongoStoreMetadataAnalyzer extends TestMongoStore {
     }
 
     @Override
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         Properties prop = DataStoreFactory.createProps();
@@ -65,7 +65,7 @@ public class TestMongoStoreMetadataAnalyzer extends TestMongoStore {
     public void testGetType() {
         String actualType = storeMetadataAnalyzer.getType();
         String expectedType = "MONGODB";
-        Assert.assertEquals(expectedType, actualType);
+        Assertions.assertEquals(expectedType, actualType);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class TestMongoStoreMetadataAnalyzer extends TestMongoStore {
                 add("webpage");
             }
         };
-        Assert.assertEquals(expectedTablesNames, actualTablesNames);
+        Assertions.assertEquals(expectedTablesNames, actualTablesNames);
     }
 
     @Test
@@ -121,10 +121,10 @@ public class TestMongoStoreMetadataAnalyzer extends TestMongoStore {
             }
         };
 
-        Assert.assertEquals(expectedDocumentKeys.size(), actualCollectionMetadata.getDocumentTypes().size());
-        Assert.assertTrue(expectedDocumentKeys.containsAll(actualCollectionMetadata.getDocumentKeys()));
+        Assertions.assertEquals(expectedDocumentKeys.size(), actualCollectionMetadata.getDocumentTypes().size());
+        Assertions.assertTrue(expectedDocumentKeys.containsAll(actualCollectionMetadata.getDocumentKeys()));
 
-        Assert.assertEquals(expectedDocumentTypes.size(), actualCollectionMetadata.getDocumentTypes().size());
-        Assert.assertTrue(expectedDocumentTypes.containsAll(actualCollectionMetadata.getDocumentTypes()));
+        Assertions.assertEquals(expectedDocumentTypes.size(), actualCollectionMetadata.getDocumentTypes().size());
+        Assertions.assertTrue(expectedDocumentTypes.containsAll(actualCollectionMetadata.getDocumentTypes()));
     }
 }

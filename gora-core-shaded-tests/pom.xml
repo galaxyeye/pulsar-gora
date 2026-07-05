@@ -48,14 +48,13 @@
       <groupId>ai.platon.pulsar</groupId>
       <artifactId>pulsar-common</artifactId>
       <version>4.9.3</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
-      <version>4.13.2</version>
+      <version>5.11.4</version>
     </dependency>
 
     <dependency>

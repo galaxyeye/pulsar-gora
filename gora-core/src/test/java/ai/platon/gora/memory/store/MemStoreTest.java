@@ -24,13 +24,13 @@ import ai.platon.gora.persistency.impl.BeanFactoryImpl;
 import ai.platon.gora.store.DataStore;
 import ai.platon.gora.store.DataStoreTestBase;
 import ai.platon.gora.util.GoraException;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static ai.platon.gora.examples.WebPageDataCreator.URLS;
-import static org.junit.Assert.*;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Testing class for all standard gora-memory functionality.
@@ -43,7 +43,7 @@ public class MemStoreTest extends DataStoreTestBase {
         setTestDriver(new MemStoreTestDriver());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
     }
@@ -57,17 +57,17 @@ public class MemStoreTest extends DataStoreTestBase {
     }
 
     @Test
-    @Ignore("MemStore has no concept of a schema")
+    @Disabled("MemStore has no concept of a schema")
     public void testTruncateSchema() throws Exception {
     }
 
     @Test
-    @Ignore("MemStore has no concept of a schema")
+    @Disabled("MemStore has no concept of a schema")
     public void testDeleteSchema() throws Exception {
     }
 
     @Test
-    @Ignore("MemStore has no concept of a schema")
+    @Disabled("MemStore has no concept of a schema")
     public void testSchemaExists() throws Exception {
     }
 

@@ -43,7 +43,7 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 import static ai.platon.gora.examples.WebPageDataCreator.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test utilities for DataStores. This utility class provides everything

@@ -28,9 +28,9 @@ import com.globalmentor.apache.hadoop.fs.BareLocalFileSystem;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -48,7 +48,7 @@ public class TestAvroStore {
     protected AvroStore<String, WebPage> webPageStore;
     protected Configuration conf = new Configuration();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         conf.setClass("fs.file.impl", BareLocalFileSystem.class, FileSystem.class);
 
@@ -73,7 +73,7 @@ public class TestAvroStore {
         return new AvroStore<>();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         deletePath(employeeStore.getOutputPath());
         deletePath(webPageStore.getOutputPath());

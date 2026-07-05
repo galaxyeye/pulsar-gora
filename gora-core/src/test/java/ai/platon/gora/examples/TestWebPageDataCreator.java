@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import ai.platon.gora.examples.generated.WebPage;
 import ai.platon.gora.memory.store.MemStore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.jupiter.api.Test;
 
-@RunWith(JUnit4.class)
+
+
+
 public class TestWebPageDataCreator {
 
   @Test 

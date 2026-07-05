@@ -21,7 +21,11 @@ package ai.platon.gora.store;
 import ai.platon.gora.examples.generated.Employee;
 import ai.platon.gora.examples.generated.WebPage;
 import ai.platon.gora.mongodb.GoraTestDriver;
-import org.junit.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +55,7 @@ public abstract class DataStoreTestBase {
 
     private static boolean setUpClassCalled = false;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         if (testDriver != null && !setUpClassCalled) {
             log.info("setting up class");
@@ -60,7 +64,7 @@ public abstract class DataStoreTestBase {
         }
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() throws Exception {
         try {
             if (testDriver != null) {
@@ -73,7 +77,7 @@ public abstract class DataStoreTestBase {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         //There is an issue in JUnit 4 tests in Eclipse where TestSqlStore static
         //methods are not called BEFORE setUpClass. I think this is a bug in
@@ -90,7 +94,7 @@ public abstract class DataStoreTestBase {
         }
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         log.info("tearing down test");
         if (testDriver != null) {

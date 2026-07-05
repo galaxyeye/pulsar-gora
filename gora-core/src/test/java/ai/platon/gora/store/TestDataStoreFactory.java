@@ -20,22 +20,22 @@ package ai.platon.gora.store;
 
 import java.util.Properties;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import ai.platon.gora.avro.store.DataFileAvroStore;
 import ai.platon.gora.mock.persistency.MockPersistent;
 import ai.platon.gora.mock.store.MockDataStore;
 import ai.platon.gora.util.GoraException;
 import org.apache.hadoop.conf.Configuration;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class TestDataStoreFactory {
   private Configuration conf;
 
-  @Before
+  @BeforeEach
   public void setUp() {
     conf = new Configuration();
   }

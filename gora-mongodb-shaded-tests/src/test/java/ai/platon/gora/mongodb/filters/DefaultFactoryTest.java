@@ -29,17 +29,17 @@ import org.apache.hadoop.conf.Configuration;
 import org.bson.BsonDocument;
 import org.bson.conversions.Bson;
 import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DefaultFactoryTest {
 
   private FilterFactory<String, WebPage> filterFactory;
   private MongoStore<String, WebPage> store;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     filterFactory = new DefaultFactory<>();
     filterFactory.setFilterUtil(new MongoFilterUtil<String, WebPage>(

@@ -4,10 +4,10 @@ import java.nio.ByteBuffer;
 
 import org.apache.avro.util.Utf8;
 import ai.platon.gora.examples.generated.WebPage;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestAvroUtils {
 
