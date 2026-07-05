@@ -366,8 +366,8 @@ public class DataStoreTestUtil {
       if (employee.getBoss() instanceof Utf8) {
         String beforeBoss = employee.getBoss().toString();
         String afterBoss = after.getBoss().toString();
-        assertEquals("Boss String field values in UNION should be the same",
-            beforeBoss, afterBoss);
+        assertEquals(beforeBoss, afterBoss,
+            "Boss String field values in UNION should be the same");
       } else {
         Employee beforeBoss = (Employee) employee.getBoss();
         Employee afterBoss = (Employee) after.getBoss();
@@ -764,10 +764,10 @@ public class DataStoreTestUtil {
     assertEquals(URLS[i], page.getUrl().toString());
     // 'content' is optional
     if (page.getContent() != null) {
-      assertTrue("content error:" + new String( toByteArray(page.getContent()), Charset.defaultCharset() ) +
-        " actual=" + CONTENTS[i] + " i=" + i
-        , Arrays.equals( toByteArray(page.getContent() )
-        , CONTENTS[i].getBytes(Charset.defaultCharset())));
+      assertTrue(Arrays.equals( toByteArray(page.getContent() )
+        , CONTENTS[i].getBytes(Charset.defaultCharset()))
+        , "content error:" + new String( toByteArray(page.getContent()), Charset.defaultCharset() ) +
+        " actual=" + CONTENTS[i] + " i=" + i);
 
       List<CharSequence> parsedContent = page.getParsedContent();
       assertNotNull(parsedContent);

@@ -347,8 +347,8 @@ public class DataStoreTestUtil {
       if (employee.getBoss() instanceof Utf8) {
         String beforeBoss = employee.getBoss().toString();
         String afterBoss = after.getBoss().toString();
-        assertEquals("Boss String field values in UNION should be the same",
-            beforeBoss, afterBoss);
+        assertEquals(beforeBoss, afterBoss,
+            "Boss String field values in UNION should be the same");
       } else {
         Employee beforeBoss = (Employee) employee.getBoss();
         Employee afterBoss = (Employee) after.getBoss();
