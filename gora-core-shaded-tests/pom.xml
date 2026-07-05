@@ -22,22 +22,28 @@
 
   <groupId>ai.platon.gora</groupId>
   <artifactId>gora-core-shaded-tests</artifactId>
-  <version>1.0.7-slim</version>
+  <version>1.0.8-slim</version>
 
   <name>Apache Gora :: Core Shaded Tests</name>
-
-  <packaging>jar</packaging>
 
   <dependencies>
     <!-- Gora Internal Dependencies -->
     <dependency>
       <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core-shaded</artifactId>
-      <version>1.0.7-slim</version>
+      <version>1.0.8-slim</version>
+      <scope>test</scope>
     </dependency>
     <!-- END of Gora Dependencies -->
 
     <!-- Testing Dependencies -->
+    <dependency>
+      <groupId>ai.platon.pulsar</groupId>
+      <artifactId>pulsar-common</artifactId>
+      <version>4.9.3</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

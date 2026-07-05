@@ -29,7 +29,7 @@
   <groupId>ai.platon.gora</groupId>
   <artifactId>gora</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.7-slim</version>
+  <version>1.0.8-slim</version>
 
   <name>Apache Gora</name>
   <description>The Apache Gora version maintained by platon.ai, primarily aimed at continuously upgrading gora-mongodb.</description>
@@ -388,11 +388,6 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${maven-enforcer-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${version.maven-compiler-plugin}</version>
           <executions>
@@ -458,26 +453,6 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-enforcer-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>enforce-java-version</id>
-            <goals>
-              <goal>enforce</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <requireJavaVersion>
-                  <version>[17,)</version>
-                  <message>Apache Gora now requires JDK 17 or newer to build.</message>
-                </requireJavaVersion>
-              </rules>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -830,7 +805,7 @@
     <!-- Maven Plugin Dependencies -->
     <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
     <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
-    <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+
 
     <!-- General Properties -->
     <javaVersion>17</javaVersion>

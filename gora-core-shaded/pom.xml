@@ -23,7 +23,7 @@
   <parent>
     <groupId>ai.platon.gora</groupId>
     <artifactId>gora</artifactId>
-    <version>1.0.7-slim</version>
+    <version>1.0.8-slim</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -108,7 +108,7 @@
                     <exclude>org/apache/hadoop/ha/**</exclude>
                     <exclude>org/apache/hadoop/http/**</exclude>
                     <!-- Security: Kerberos, tokens, SSL, aliases — not needed -->
-                    <exclude>org/apache/hadoop/security/**</exclude>
+<!--                    <exclude>org/apache/hadoop/security/**</exclude>-->
                     <!-- Metrics2: metrics framework — not needed -->
                     <exclude>org/apache/hadoop/metrics2/**</exclude>
                     <!-- Crypto: KMS, key providers, ciphers — not needed -->
