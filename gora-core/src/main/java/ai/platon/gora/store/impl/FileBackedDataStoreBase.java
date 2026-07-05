@@ -23,6 +23,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.List;
 import java.util.Properties;
 
@@ -34,10 +35,12 @@ import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.store.FileBackedDataStore;
 import ai.platon.gora.util.GoraException;
 import org.apache.commons.lang3.NotImplementedException;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.util.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,22 +114,53 @@ extends DataStoreBase<K, T> implements FileBackedDataStore<K, T> {
     return outputStream;
   }
 
-  /** 
+  /**
+   * Creates a FileSystem instance bypassing the Hadoop FileSystem cache.
+   * This is needed on JDK 18+ where Subject.getSubject() throws
+   * UnsupportedOperationException, breaking the FileSystem.Cache.Key
+   * constructor. Avoids calling FileSystem.getFileSystemClass() which
+   * triggers loadFileSystems() and may indirectly call
+   * UserGroupInformation.getCurrentUser().
+   */
+  public static FileSystem getFileSystem(Path path, Configuration conf) throws IOException {
+    URI uri = path.toUri();
+    String scheme = uri.getScheme();
+    if (scheme == null) {
+      scheme = "file";
+      uri = FileSystem.getDefaultUri(conf).resolve(uri);
+    }
+    String property = "fs." + scheme + ".impl";
+    Class<? extends FileSystem> clazz = conf.getClass(property, null, FileSystem.class);
+    if (clazz == null) {
+      // Fall back to Hadoop's default: LocalFileSystem for file:/// scheme,
+      // RawLocalFileSystem otherwise
+      if ("file".equals(scheme)) {
+        clazz = org.apache.hadoop.fs.LocalFileSystem.class;
+      } else {
+        clazz = org.apache.hadoop.fs.RawLocalFileSystem.class;
+      }
+    }
+    FileSystem fs = ReflectionUtils.newInstance(clazz, conf);
+    fs.initialize(uri, conf);
+    return fs;
+  }
+
+  /**
    * Opens an InputStream for the input Hadoop path
    * @return an open {@link java.io.InputStream}
-   * @throws IOException if there is an error obtaining the FileSystem or/from 
+   * @throws IOException if there is an error obtaining the FileSystem or/from
    * the path
    */
   protected InputStream createInputStream() throws IOException {
     //TODO: if input path is a directory, use smt like MultiInputStream to
     //read all the files recursively
     Path path = new Path(inputPath);
-    FileSystem fs = path.getFileSystem(getConf());
+    FileSystem fs = getFileSystem(path, getConf());
     inputSize = fs.getFileStatus(path).getLen();
     return fs.open(path);
   }
 
-  /** 
+  /**
    * Opens an OutputStream for the output Hadoop path
    * @return an open {@link java.io.OutputStream}
    */
@@ -134,7 +168,7 @@ extends DataStoreBase<K, T> implements FileBackedDataStore<K, T> {
     OutputStream conf = null;
     try{
       Path path = new Path(outputPath);
-      FileSystem fs = path.getFileSystem(getConf());
+      FileSystem fs = getFileSystem(path, getConf());
       conf = fs.create(path);
     }catch(IOException ex){
       LOG.error(ex.getMessage(), ex);

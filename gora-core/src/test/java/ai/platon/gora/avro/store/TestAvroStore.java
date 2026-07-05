@@ -23,6 +23,7 @@ import ai.platon.gora.examples.generated.Employee;
 import ai.platon.gora.examples.generated.WebPage;
 import ai.platon.gora.store.DataStoreFactory;
 import ai.platon.gora.store.DataStoreTestUtil;
+import ai.platon.gora.store.impl.FileBackedDataStoreBase;
 import ai.platon.gora.util.GoraException;
 import com.globalmentor.apache.hadoop.fs.BareLocalFileSystem;
 import org.apache.hadoop.conf.Configuration;
@@ -53,11 +54,13 @@ public class TestAvroStore {
         conf.setClass("fs.file.impl", BareLocalFileSystem.class, FileSystem.class);
 
         employeeStore = createEmployeeDataStore();
+        employeeStore.setConf(conf);
         employeeStore.initialize(String.class, Employee.class, DataStoreFactory.createProps());
         employeeStore.setOutputPath(EMPLOYEE_OUTPUT);
         employeeStore.setInputPath(EMPLOYEE_OUTPUT);
 
-        webPageStore = new AvroStore<>();
+        webPageStore = createWebPageDataStore();
+        webPageStore.setConf(conf);
         webPageStore.initialize(String.class, WebPage.class, DataStoreFactory.createProps());
         webPageStore.setOutputPath(WEBPAGE_OUTPUT);
         webPageStore.setInputPath(WEBPAGE_OUTPUT);
@@ -85,7 +88,7 @@ public class TestAvroStore {
     private void deletePath(String output) throws IOException {
         if (output != null) {
             Path path = new Path(output);
-            path.getFileSystem(conf).delete(path, true);
+            FileBackedDataStoreBase.getFileSystem(path, conf).delete(path, true);
         }
     }
 
