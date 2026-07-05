@@ -30,6 +30,13 @@
     <!-- Gora Internal Dependencies -->
     <dependency>
       <groupId>ai.platon.gora</groupId>
+      <artifactId>gora-core</artifactId>
+      <version>1.0.8-slim</version>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core-shaded</artifactId>
       <version>1.0.8-slim</version>
       <scope>test</scope>
