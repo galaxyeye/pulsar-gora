@@ -6,8 +6,7 @@ import org.apache.avro.util.Utf8;
 import ai.platon.gora.examples.generated.WebPage;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestAvroUtils {
 
@@ -19,11 +18,11 @@ public class TestAvroUtils {
             .setContent(ByteBuffer.wrap("Gora".getBytes("UTF-8")));
         WebPage webPage = builder.build();
         WebPage clonedWebPage = AvroUtils.deepClonePersistent(webPage);
-        assertThat(clonedWebPage, is(notNullValue()));
-        assertThat(clonedWebPage.getUrl(), is(equalTo(url)));
-        assertThat(clonedWebPage.getContent(), is(notNullValue()));
+        assertNotNull(clonedWebPage);
+        assertEquals(url, clonedWebPage.getUrl());
+        assertNotNull(clonedWebPage.getContent());
         String clonedWebPageContent = new String(clonedWebPage.getContent().array(), "UTF-8");
-        assertThat(clonedWebPageContent, is(equalTo("Gora")));
+        assertEquals("Gora", clonedWebPageContent);
     }
 
 }

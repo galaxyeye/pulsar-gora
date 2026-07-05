@@ -161,12 +161,12 @@ public class TestPersistentBase {
   @Test
   public void testSetDirty() {
     WebPage page = WebPage.newBuilder().build();
-    assertEquals("Expected the new Persistent instance to not be dirty.", false, page.isDirty()) ;
+    assertEquals(false, page.isDirty(), "Expected the new Persistent instance to not be dirty.") ;
     page.setDirty();
     
     // Assert each field is dirty
     for (Field field : page.getSchema().getFields()) {
-      assertEquals("The field " + field.name() + " is not dirty.", true, page.isDirty(field.name()));
+      assertEquals(true, page.isDirty(field.name()), "The field " + field.name() + " is not dirty.");
     }
   }
 }
