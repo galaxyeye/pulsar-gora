@@ -30,16 +30,8 @@
     <!-- Gora Internal Dependencies -->
     <dependency>
       <groupId>ai.platon.gora</groupId>
-      <artifactId>gora-core</artifactId>
-      <version>1.0.9-slim</version>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core-shaded</artifactId>
       <version>1.0.9-slim</version>
-      <scope>test</scope>
     </dependency>
     <!-- END of Gora Dependencies -->
 
@@ -55,37 +47,6 @@
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
       <version>5.11.4</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-minicluster</artifactId>
-      <scope>test</scope>
-      <version>${hadoop-3.test.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-reload4j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.reload4j</groupId>
-          <artifactId>reload4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sparkutils</groupId>
-      <artifactId>hadoop-bare-naked-local-fs</artifactId>
-      <scope>test</scope>
-      <version>0.2.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <scope>test</scope>
-      <version>20251224</version>
     </dependency>
 
     <!-- END of Testing Dependencies -->

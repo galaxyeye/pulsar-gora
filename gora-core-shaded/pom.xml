@@ -153,6 +153,15 @@
                     <exclude>org/apache/hadoop/security/authentication/**</exclude>
                   </excludes>
                 </filter>
+                <!-- Keep Woodstox: loaded via SPI (ServiceLoader) by Hadoop
+                     Configuration for XML parsing. Bytecode-based minimization
+                     can't trace SPI references, so include it explicitly. -->
+                <filter>
+                  <artifact>com.fasterxml.woodstox:woodstox-core</artifact>
+                  <includes>
+                    <include>**</include>
+                  </includes>
+                </filter>
                 <!-- Trim heavy transitive deps of hadoop that gora-core never uses -->
                 <filter>
                   <artifact>*:*</artifact>
@@ -165,7 +174,7 @@
                     <exclude>com/nimbusds/**</exclude>
                     <exclude>com/jcraft/**</exclude>
                     <exclude>com/codahale/**</exclude>
-                    <exclude>com/ctc/**</exclude>
+
                     <exclude>org/glassfish/**</exclude>
                     <exclude>org/tukaani/**</exclude>
                     <exclude>javax/servlet/**</exclude>
