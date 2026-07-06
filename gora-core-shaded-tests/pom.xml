@@ -22,7 +22,7 @@
 
   <groupId>ai.platon.gora</groupId>
   <artifactId>gora-core-shaded-tests</artifactId>
-  <version>1.0.9-slim</version>
+  <version>1.0.10-slim</version>
 
   <name>Apache Gora :: Core Shaded Tests</name>
 
@@ -31,7 +31,7 @@
     <dependency>
       <groupId>ai.platon.gora</groupId>
       <artifactId>gora-core-shaded</artifactId>
-      <version>1.0.9-slim</version>
+      <version>1.0.10-slim</version>
     </dependency>
     <!-- END of Gora Dependencies -->
 
