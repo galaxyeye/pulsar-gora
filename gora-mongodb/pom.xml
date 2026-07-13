@@ -36,7 +36,7 @@
     <!-- Gora Internal Dependencies -->
     <dependency>
       <groupId>ai.platon.gora</groupId>
-      <artifactId>gora-core</artifactId>
+      <artifactId>gora-core-shaded</artifactId>
     </dependency>
 
     <dependency>
