@@ -625,7 +625,6 @@
     <module>gora-core-shaded</module>
     <module>gora-core-shaded-tests</module>
     <module>gora-mongodb</module>
-    <module>gora-mongodb-shaded</module>
   </modules>
 
   <dependencyManagement>
