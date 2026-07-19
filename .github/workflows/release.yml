@@ -1,0 +1,292 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*.*.*-rc.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g., v1.0.0, v1.0.0-rc.1)'
+        required: true
+        type: string
+      skip_tests:
+        description: 'Skip tests during build'
+        required: false
+        default: true
+        type: boolean
+
+# Prevent concurrent releases
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  packages: write
+  attestations: write
+  id-token: write
+
+env:
+  JAVA_VERSION: '17'
+  MAVEN_OPTS: '-Xmx3g -XX:+UseG1GC'
+
+jobs:
+  ci-build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Determine Release Version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RAW_TAG="${{ inputs.tag }}"
+          else
+            RAW_TAG="${{ github.ref_name }}"
+          fi
+          VERSION="${RAW_TAG#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Release version: $VERSION"
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: maven
+
+      - name: Prepare Maven Wrapper
+        run: chmod +x ./mvnw
+
+      - name: Maven Build
+        run: |
+          echo "=== Building with Maven (tests skipped) ==="
+          ./mvnw --batch-mode --no-transfer-progress clean install -DskipTests
+
+      - name: Run Tests
+        if: ${{ !inputs.skip_tests }}
+        run: |
+          echo "=== Running tests ==="
+          ./mvnw --batch-mode --no-transfer-progress test
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          body: |
+            ## Release ${{ steps.version.outputs.tag }}
+
+            ### Modules
+            - **gora-compiler** — Annotation processor / compiler for Gora
+            - **gora-core** — Core data model and runtime
+            - **gora-core-shaded** — Shaded core with relocated dependencies
+            - **gora-core-shaded-tests** — Integration tests for the shaded module
+            - **gora-mongodb** — MongoDB data store adapter
+
+            ### Maven Central
+            ```xml
+            <dependency>
+              <groupId>ai.platon.gora</groupId>
+              <artifactId>gora-core-shaded</artifactId>
+              <version>${{ steps.version.outputs.version }}</version>
+            </dependency>
+            ```
+
+            🤖 Generated with [Claude Code](https://claude.com/claude-code)
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.tag, '-rc.') || contains(steps.version.outputs.tag, '-alpha') || contains(steps.version.outputs.tag, '-beta') }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: ci-build
+    if: needs.ci-build.result == 'success'
+    permissions:
+      contents: read
+    env:
+      GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+      CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Validate release secrets
+        shell: bash
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+
+          echo "=== Release secret preflight ==="
+          missing=0
+
+          if [ -z "${CENTRAL_USERNAME:-}" ]; then
+            echo "::error::Missing required secret: CENTRAL_USERNAME"
+            missing=1
+          else
+            echo "CENTRAL_USERNAME: configured"
+          fi
+
+          if [ -z "${CENTRAL_PASSWORD:-}" ]; then
+            echo "::error::Missing required secret: CENTRAL_PASSWORD"
+            missing=1
+          else
+            echo "CENTRAL_PASSWORD: configured"
+          fi
+
+          if [ -z "${GPG_PASSPHRASE:-}" ]; then
+            echo "::error::Missing required secret: GPG_PASSPHRASE"
+            missing=1
+          else
+            echo "GPG_PASSPHRASE: configured"
+          fi
+
+          if [ -z "${GPG_PRIVATE_KEY:-}" ]; then
+            echo "::error::Missing required secret: GPG_PRIVATE_KEY"
+            missing=1
+          else
+            echo "GPG_PRIVATE_KEY: configured"
+            if ! printf '%s' "$GPG_PRIVATE_KEY" | grep -q "BEGIN PGP PRIVATE KEY BLOCK"; then
+              echo "::error::GPG_PRIVATE_KEY does not look like an ASCII-armored private key block"
+              missing=1
+            fi
+          fi
+
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::Release preflight failed. Configure the missing or invalid secrets and retry."
+            exit 1
+          fi
+
+      - name: Setup Deploy Tooling
+        shell: bash
+        run: |
+          echo "::group::Installing Deploy Prerequisites"
+          if ! command -v python3 &> /dev/null; then
+            sudo apt-get update -qq && sudo apt-get install -y python3
+          fi
+          echo "✅ python3: $(python3 --version)"
+          echo "::endgroup::"
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }} for Deployment
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: maven
+          server-id: 'central'
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+        env:
+          MAVEN_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Prepare Maven Wrapper
+        shell: bash
+        run: chmod +x ./mvnw
+
+      - name: Replace SNAPSHOT versions for release
+        shell: bash
+        env:
+          RELEASE_VERSION: ${{ needs.ci-build.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          python3 <<'PY'
+          from pathlib import Path
+          import os, re
+
+          repo_root = Path(os.environ["GITHUB_WORKSPACE"])
+          release_version = os.environ["RELEASE_VERSION"].strip()
+
+          if not release_version:
+              raise SystemExit("RELEASE_VERSION is empty")
+
+          # Extract the current SNAPSHOT version from root pom.xml
+          root_pom = repo_root / "pom.xml"
+          content = root_pom.read_text(encoding="utf-8")
+
+          # Find version after groupId/artifactId/packaging in the root project section
+          m = re.search(
+              r'<groupId>ai\.platon\.gora</groupId>\s*'
+              r'<artifactId>gora</artifactId>\s*'
+              r'<packaging>pom</packaging>\s*'
+              r'<version>([^<]+)</version>',
+              content
+          )
+          if not m:
+              raise SystemExit("Could not find root project version in pom.xml")
+
+          snapshot_version = m.group(1).strip()
+          if not snapshot_version.endswith("-SNAPSHOT"):
+              raise SystemExit(f"Expected SNAPSHOT version, found: {snapshot_version}")
+
+          print(f"=== Preparing release versions ===")
+          print(f"Snapshot version: {snapshot_version}")
+          print(f"Release version:  {release_version}")
+
+          updated_files = []
+          for pom_file in repo_root.rglob("pom.xml"):
+              original = pom_file.read_text(encoding="utf-8")
+              updated = original.replace(snapshot_version, release_version)
+              if updated != original:
+                  pom_file.write_text(updated, encoding="utf-8", newline="\n")
+                  updated_files.append(str(pom_file.relative_to(repo_root)))
+
+          if not updated_files:
+              raise SystemExit(f"No pom.xml files contained snapshot version {snapshot_version}")
+
+          print("Updated pom.xml files:")
+          for path in updated_files:
+              print(f" - {path}")
+          PY
+
+      - name: Deploy to Sonatype Central
+        if: success()
+        run: |
+          echo "=== Deploying to Maven Central ==="
+          ./mvnw --batch-mode deploy -P release -DskipTests \
+            -Dgpg.passphrase="$GPG_PASSPHRASE" \
+            -Dgpg.batch=true \
+            -Dgpg.pinentry-mode=loopback \
+            -Dcentral.username="$CENTRAL_USERNAME" \
+            -Dcentral.password="$CENTRAL_PASSWORD" \
+            --show-version --errors
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+
+  release-summary:
+    runs-on: ubuntu-latest
+    needs:
+      - ci-build
+      - deploy
+    if: always()
+    permissions: {}
+
+    steps:
+      - name: Release Summary
+        run: |
+          echo "## Release Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Step | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Build | ${{ needs.ci-build.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Deploy | ${{ needs.deploy.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | ${{ needs.ci-build.outputs.version || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
