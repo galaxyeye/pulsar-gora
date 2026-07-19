@@ -217,6 +217,36 @@
           </execution>
         </executions>
       </plugin>
+
+      <!--
+        Unpack the shaded uber-JAR back into target/classes/ so that reactor
+        modules (gora-core-shaded-tests) can compile against the full shaded
+        classpath. Without this, Maven resolves reactor dependencies via
+        target/classes/ which only contains the thin wrapper; the shaded
+        classes (gora-core, Avro, Hadoop, etc.) are only in the JAR and
+        therefore invisible during compilation.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-shaded-to-classes</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <unzip
+                  src="${project.build.directory}/${project.build.finalName}.jar"
+                  dest="${project.build.outputDirectory}"
+                  overwrite="true" />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
